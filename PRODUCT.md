@@ -17,7 +17,7 @@ Em ambos os casos, o site não vende sozinho. Vende a marca, captura sinal de in
 
 `grupous.com.br` é a **vitrine institucional** do ecossistema Grupo US. Substitui um conjunto disperso de LPs por uma porta de entrada única, em PT-BR, com hierarquia clara: identidade da marca → grade de produtos → jornada → autoridade da Dra. Sacha Gualberto e do time → CTAs alinhados aos canais oficiais.
 
-Sucesso operacional: a aluna potencial sai do home sabendo (a) o que o Grupo US faz, (b) qual produto encaixa na fase dela, (c) por onde continuar (LP específica, WhatsApp ou comunidade). O site **não roda** funil de checkout próprio; ele empurra para os hubs externos (`drasacha.com.br`, `namesa.gpus.com.br`, `neondash.com.br`, `trintae3.drasacha.com.br`).
+Sucesso operacional: a aluna potencial sai do home sabendo (a) o que o Grupo US faz, (b) qual produto encaixa na fase dela, (c) por onde continuar (LP específica, WhatsApp ou comunidade). O site **não roda** funil de checkout próprio; ele empurra para os hubs externos (`drasacha.com.br`, `namesa.gpus.com.br`, `neondash.com.br`, `trintae3.gpus.com.br`).
 
 Mapa de produtos e rotas — fonte da verdade em [`astro.config.mjs`](astro.config.mjs) (redirects) + [`src/content/products/`](src/content/products) (JSON com `externalSiteUrl` e `cta.url`). Detalhe institucional, IDs e jornada → `.claude/skills/grupo-us/references/manual-resumo.md`.
 

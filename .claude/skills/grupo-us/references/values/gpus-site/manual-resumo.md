@@ -83,7 +83,7 @@ Ordem sugerida para recomendação:
 
 ### Links citados no documento (hubs / LPs)
 
-- TRINTAE3: `https://trintae3.drasacha.com.br/`  
+- TRINTAE3: `https://trintae3.gpus.com.br/`  
 - OTB: `https://otb.drasacha.com.br/`  
 - Na Mesa Certa (exemplo no doc): `https://drasacha.com.br/na-mesa/`  
 - Comunidade: inscrição no site principal (path pode mudar; validar ao vivo).  

@@ -7,9 +7,9 @@
  *
  * Usage:
  *   node scripts/smoke-test.mjs                                # default: http://localhost:4321
- *   node scripts/smoke-test.mjs https://trintae3.drasacha.com.br
+ *   node scripts/smoke-test.mjs https://trintae3.gpus.com.br
  *   bun run smoke-test
- *   bun run smoke-test https://trintae3.drasacha.com.br
+ *   bun run smoke-test https://trintae3.gpus.com.br
  */
 
 const BASE = (process.argv[2] || "http://localhost:4321").replace(/\/$/, "");

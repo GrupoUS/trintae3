@@ -6,9 +6,9 @@
     "purpose": "Standalone landing page for the TRINTAE3 post-graduation + mentorship program.",
     "stack": "astro-static-tailwindv4",
     "stackSummary": "Astro 6 (static-only) · Bun · Tailwind CSS v4 · React 19 (islands; minimal) · Railway · Lucide React · Playfair Display + Inter",
-    "domain": "trintae3.drasacha.com.br",
+    "domain": "trintae3.gpus.com.br",
     "stagingUrl": "http://localhost:4321",
-    "productionUrl": "https://trintae3.drasacha.com.br",
+    "productionUrl": "https://trintae3.gpus.com.br",
     "locale": "pt-BR",
     "brand": "trintae3"
   },
@@ -65,7 +65,7 @@
     "typeChecker": "astro-check",
     "linter": "biome",
     "testRunner": "",
-    "deployer": "railway",
+    "deployer": "vercel",
     "frontendFramework": "astro+react-islands",
     "database": "",
     "orm": ""
