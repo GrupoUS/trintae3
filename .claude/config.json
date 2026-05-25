@@ -1,5 +1,5 @@
 {
-  "$schema": "./config.schema.json",
+  o site"$schema": "./config.schema.json",
   "project": {
     "name": "trintae3",
     "displayName": "TRINTAE3 — Landing Page",
@@ -65,7 +65,7 @@
     "typeChecker": "astro-check",
     "linter": "biome",
     "testRunner": "",
-    "deployer": "railway",
+    "deployer": "vercel",
     "frontendFramework": "astro+react-islands",
     "database": "",
     "orm": ""
