@@ -18,7 +18,7 @@ Rotas entre parênteses são paths relativos ao domínio do site (ex.: `https://
 
 ## LP / hub adicionais (manual Google Doc)
 
-- TRINTAE3: `https://trintae3.drasacha.com.br/`  
+- TRINTAE3: `https://trintae3.gpus.com.br/`  
 - OTB: `https://otb.drasacha.com.br/`  
 - Na Mesa (exemplo no doc): `https://drasacha.com.br/na-mesa/` — pode diferir de `namesacerta.com.br`; validar campanha.
 

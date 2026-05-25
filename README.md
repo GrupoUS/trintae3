@@ -1,6 +1,6 @@
 # gpus-site — Site institucional Grupo US
 
-> Vitrine institucional do ecossistema Grupo US. Hub PT-BR de tráfego que despacha leads para funis externos (`drasacha.com.br`, `namesa.gpus.com.br`, `neondash.com.br`, `trintae3.drasacha.com.br`).
+> Vitrine institucional do ecossistema Grupo US. Hub PT-BR de tráfego que despacha leads para funis externos (`drasacha.com.br`, `namesa.gpus.com.br`, `neondash.com.br`, `trintae3.gpus.com.br`).
 > **Produção:** [`https://grupous.com.br`](https://grupous.com.br)
 
 Brief de produto → [`PRODUCT.md`](PRODUCT.md) · Design system → [`DESIGN.md`](DESIGN.md) · Regras para agentes → [`AGENTS.md`](AGENTS.md)
@@ -111,7 +111,7 @@ gpus-site/
 | Path interno | Destino externo |
 |---|---|
 | `/na-mesa-certa` | `https://namesa.gpus.com.br/` |
-| `/trintae3` | `https://trintae3.drasacha.com.br/` |
+| `/trintae3` | `https://trintae3.gpus.com.br/` |
 | `/comunidade-us` | `https://drasacha.com.br/pagina-de-inscricao-comu-us/` |
 | `/neon-dash` | `https://neondash.com.br/` |
 
