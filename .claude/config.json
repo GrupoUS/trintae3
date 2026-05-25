@@ -1,5 +1,4 @@
 {
-  "$schema": "./config.schema.json",
   "project": {
     "name": "trintae3",
     "displayName": "TRINTAE3 — Landing Page",
