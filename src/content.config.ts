@@ -37,6 +37,18 @@ const products = defineCollection({
 				}),
 			)
 			.length(3),
+		/** Optional secondary pillars set (use when product needs 4+ "why different" items separate from the core 3 pillars). */
+		differentialPillars: z
+			.array(
+				z.object({
+					number: z.string().optional(),
+					title: z.string(),
+					description: z.string(),
+				}),
+			)
+			.min(1)
+			.max(6)
+			.optional(),
 		benefits: z.array(z.string()).min(4),
 		deliverables: z
 			.array(
@@ -77,6 +89,84 @@ const products = defineCollection({
 				}),
 			)
 			.min(2),
+		/** Optional: 3-5 in-person practice phases (location + duration + description). */
+		practicePhases: z
+			.array(
+				z.object({
+					title: z.string(),
+					location: z.string(),
+					days: z.string().optional(),
+					description: z.string(),
+					image: z.string().optional(),
+				}),
+			)
+			.min(1)
+			.max(5)
+			.optional(),
+		/** Optional: curriculum module list with optional hours per module. */
+		curriculumModules: z
+			.array(
+				z.object({
+					number: z.string(),
+					title: z.string(),
+					description: z.string(),
+					hours: z.string().optional(),
+				}),
+			)
+			.min(5)
+			.max(15)
+			.optional(),
+		/** Optional: money-back / risk-reversal guarantee block. */
+		guarantee: z
+			.object({
+				title: z.string(),
+				body: z.string(),
+				daysCount: z.number().int().positive(),
+			})
+			.optional(),
+		/** Optional: extended faculty list (instructors/mentors). */
+		faculty: z
+			.array(
+				z.object({
+					name: z.string(),
+					role: z.string(),
+					photo: z.string().optional(),
+					bio: z.string().optional(),
+				}),
+			)
+			.min(1)
+			.max(12)
+			.optional(),
+		/** Optional: target audience list (professions/profiles) with optional highlight flag. */
+		audienceList: z
+			.array(
+				z.object({
+					label: z.string(),
+					highlight: z.boolean().optional(),
+					note: z.string().optional(),
+				}),
+			)
+			.min(1)
+			.optional(),
+		/** Optional: secondary CTA (e.g. external form / Typebot) shown alongside primary WhatsApp CTA. */
+		secondaryCTA: z
+			.object({
+				label: z.string(),
+				url: z.string().url(),
+				helperText: z.string().optional(),
+			})
+			.optional(),
+		/** Optional: hero badges (certification, format, duration, etc.). */
+		badges: z
+			.array(
+				z.object({
+					label: z.string(),
+					icon: z.string().optional(),
+				}),
+			)
+			.min(1)
+			.max(5)
+			.optional(),
 		faqs: z
 			.array(
 				z.object({
@@ -118,20 +208,4 @@ const products = defineCollection({
 	}),
 });
 
-const team = defineCollection({
-	loader: glob({ pattern: "**/*.json", base: "src/content/team" }),
-	schema: z.object({
-		name: z.string(),
-		role: z.string(),
-		bio: z.string(),
-		photo: z.string(),
-		order: z.number(),
-		social: z.object({
-			instagram: z.string().url().optional(),
-			linkedin: z.string().url().optional(),
-			twitter: z.string().url().optional(),
-		}),
-	}),
-});
-
-export const collections = { products, team };
+export const collections = { products };

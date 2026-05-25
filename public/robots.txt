@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /404
 
-Sitemap: https://grupous.com.br/sitemap-index.xml
+Sitemap: https://trintae3.drasacha.com.br/sitemap-index.xml

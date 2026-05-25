@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Garante que externalSiteUrl e cta.url dos produtos externos batem com redirects em astro.config.mjs.
- * Ver docs/solutions/integration-issues/astro-static-external-product-routing.md
+ * Verifica que destinos externos do CTA do TRINTAE3 (WhatsApp Laura + Typebot)
+ * são URLs bem-formadas e que o produto canonical tem cta.url alinhado ao
+ * whatsappMessage encodado.
  */
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -15,65 +16,45 @@ function normalizeUrl(u) {
 	return u.replace(/\/$/, "") || u;
 }
 
-/** @param {string} configText */
-function parseRedirect(configText, pathKey) {
-	const escaped = pathKey.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-	const re = new RegExp(`${escaped}"\\s*:\\s*"([^"]+)"`);
-	const m = configText.match(re);
-	return m ? normalizeUrl(m[1]) : null;
-}
-
-const ROUTES = [
-	{ slug: "na-mesa-certa", pathKey: "/na-mesa-certa" },
-	{ slug: "otb", pathKey: "/otb" },
-	{ slug: "trintae3", pathKey: "/trintae3" },
-	{ slug: "comunidade-us", pathKey: "/comunidade-us" },
-	{ slug: "neon-dash", pathKey: "/neon-dash" },
-];
-
-const configText = readFileSync(join(root, "astro.config.mjs"), "utf8");
+const productPath = join(root, "src/content/products/trintae3.json");
+const data = JSON.parse(readFileSync(productPath, "utf8"));
 
 let failed = false;
-for (const { slug, pathKey } of ROUTES) {
-	const raw = readFileSync(
-		join(root, "src/content/products", `${slug}.json`),
-		"utf8",
-	);
-	const data = JSON.parse(raw);
-	const ext = normalizeUrl(data.externalSiteUrl);
-	const cta = normalizeUrl(data.cta?.url);
-	const redir = parseRedirect(configText, pathKey);
 
-	if (!ext) {
-		console.error(`[check-external-urls] ${slug}: missing externalSiteUrl`);
-		failed = true;
-		continue;
-	}
-	if (!redir) {
+const ctaUrl = normalizeUrl(data.cta?.url);
+const ctaMsg = data.cta?.whatsappMessage;
+if (!ctaUrl) {
+	console.error("[check-external-urls] trintae3: missing cta.url");
+	failed = true;
+} else if (!ctaUrl.includes("wa.me/")) {
+	console.error(
+		`[check-external-urls] trintae3: cta.url "${ctaUrl}" must be a wa.me/... link`,
+	);
+	failed = true;
+} else if (ctaMsg) {
+	const encoded = encodeURIComponent(ctaMsg);
+	if (!ctaUrl.includes(encoded)) {
 		console.error(
-			`[check-external-urls] ${slug}: no redirect for "${pathKey}" in astro.config.mjs`,
+			"[check-external-urls] trintae3: cta.url query text does not match encodeURIComponent(cta.whatsappMessage)",
 		);
 		failed = true;
-		continue;
 	}
-	if (redir !== ext) {
+}
+
+const secUrl = data.secondaryCTA?.url;
+if (secUrl) {
+	try {
+		new URL(secUrl);
+	} catch {
 		console.error(
-			`[check-external-urls] ${slug}: redirect "${redir}" !== externalSiteUrl "${ext}"`,
-		);
-		failed = true;
-	}
-	if (cta && cta !== ext) {
-		console.error(
-			`[check-external-urls] ${slug}: cta.url "${cta}" !== externalSiteUrl "${ext}" (align both + redirect)`,
+			`[check-external-urls] trintae3: secondaryCTA.url "${secUrl}" is not a valid URL`,
 		);
 		failed = true;
 	}
 }
 
 if (!failed) {
-	console.log(
-		"[check-external-urls] OK: external products aligned with astro.config.mjs",
-	);
+	console.log("[check-external-urls] OK: TRINTAE3 CTA URLs aligned");
 }
 
 process.exit(failed ? 1 : 0);

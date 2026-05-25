@@ -1,0 +1,96 @@
+---
+import SectionHeading from "../shared/SectionHeading.astro";
+
+interface Props {
+	phases: Array<{
+		title: string;
+		location: string;
+		days?: string;
+		description: string;
+		image?: string;
+	}>;
+	totalLabel?: string;
+}
+
+const { phases, totalLabel } = Astro.props;
+---
+
+<section class="px-4 py-20 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-7xl">
+		<SectionHeading
+			title="A seringa nas suas mãos. Desde o início."
+			subtitle={totalLabel ?? "100 horas de prática supervisionada em 3 cidades — você é protagonista, não espectador"}
+		/>
+
+		<ol class="mt-14 space-y-12" role="list">
+			{phases.map((phase, index) => {
+				const reversed = index % 2 === 1;
+				const reveal = reversed ? "left" : "right";
+				return (
+					<li
+						class:list={[
+							"grid grid-cols-1 items-center gap-8 lg:gap-12",
+							phase.image ? "lg:grid-cols-12" : "lg:grid-cols-1",
+						]}
+						data-reveal={reveal}
+						data-reveal-delay={String((index % 3) + 1)}
+					>
+						<div
+							class:list={[
+								"relative",
+								phase.image
+									? reversed
+										? "lg:order-2 lg:col-span-7"
+										: "lg:col-span-7"
+									: "",
+							]}
+						>
+							<div class="glass-card rounded-2xl p-6 md:p-8">
+								<div class="flex items-baseline gap-4">
+									<span class="font-serif text-5xl font-bold text-gold md:text-6xl">
+										{String(index + 1).padStart(2, "0")}
+									</span>
+									<div>
+										<h3 class="font-serif text-xl font-bold text-text-primary md:text-2xl">
+											{phase.title}
+										</h3>
+										<p class="mt-1 text-sm font-medium uppercase tracking-[0.06em] text-gold-light">
+											{phase.location}
+										</p>
+									</div>
+								</div>
+								{phase.days && (
+									<span class="mt-4 inline-block rounded-full border border-gold/20 bg-gold/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-gold">
+										{phase.days}
+									</span>
+								)}
+								<p class="mt-5 leading-relaxed text-text-muted">
+									{phase.description}
+								</p>
+							</div>
+						</div>
+
+						{phase.image && (
+							<div
+								class:list={[
+									"relative overflow-hidden rounded-2xl border border-gold/10 lg:col-span-5",
+									reversed ? "lg:order-1" : "",
+								]}
+							>
+								<img
+									src={phase.image}
+									alt={`Fase ${index + 1}: ${phase.title}`}
+									width="800"
+									height="600"
+									class="h-auto w-full object-cover"
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+						)}
+					</li>
+				);
+			})}
+		</ol>
+	</div>
+</section>

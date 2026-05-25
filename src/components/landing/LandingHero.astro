@@ -17,9 +17,10 @@ interface Props {
 		whatsappMessage: string;
 		helperText?: string;
 	};
+	badges?: Array<{ label: string; icon?: string }>;
 }
 
-const { name, tagline, hero, type, cta } = Astro.props;
+const { name, tagline, hero, type, cta, badges } = Astro.props;
 
 const whatsappUrl = whatsappUrlWithText(cta.whatsappMessage);
 const showWhatsappSecondary = !isWhatsAppDestination(cta.url);
@@ -42,6 +43,18 @@ const headlineStart = words.join(" ");
 			>
 				{type}
 			</span>
+
+			{badges && badges.length > 0 && (
+				<ul class="mb-6 flex flex-wrap items-center justify-center gap-2" aria-label="Selos do programa" role="list">
+					{badges.map((badge) => (
+						<li
+							class="inline-flex items-center rounded-full border border-gold/15 bg-navy-light/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-text-primary"
+						>
+							{badge.label}
+						</li>
+					))}
+				</ul>
+			)}
 
 			<p class="mx-auto max-w-3xl text-sm leading-relaxed text-gold/75 md:text-base">
 				{tagline}

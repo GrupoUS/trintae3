@@ -1,107 +1,321 @@
 {
 	"name": "TRINTAE3",
 	"slug": "trintae3",
-	"tagline": "A única Pós-graduação reconhecida pelo MEC que também é Mentoria. Técnica avançada, gestão de negócios e acompanhamento real para você se tornar referência.",
-	"description": "Pós-graduação reconhecida pelo MEC com mentoria prática: técnica avançada, gestão de clínica e acompanhamento para enfermeiros, biomédicos, farmacêuticos e fisioterapeutas que buscam referência em estética.",
-	"type": "Pós-graduação + Mentoria",
-	"audience": "Enfermeiros, biomédicos, farmacêuticos e fisioterapeutas",
+	"tagline": "A única Pós-Graduação em Saúde Estética Avançada e HOF do Brasil que também é Mentoria. Técnica, posicionamento e negócios em 6 meses — para você parar de trocar hora por dinheiro e construir a carreira que merece.",
+	"description": "Pós-graduação reconhecida pelo MEC e Harmonização Orofacial (HOF) com mentoria prática: 534h teóricas + 100h presenciais supervisionadas em 3 cidades do Brasil, mentoria de negócios e comunidade exclusiva para enfermeiros, biomédicos, fisioterapeutas, farmacêuticos e odontólogos.",
+	"type": "Pós-Graduação MEC + Mentoria",
+	"audience": "Enfermeiros, biomédicos, fisioterapeutas, farmacêuticos e odontólogos (HOF) que querem se tornar especialistas em Saúde Estética Avançada",
 	"icon": "GraduationCap",
 	"image": "/images/products/trintae3.webp",
-	"externalSiteUrl": "https://trintae3.drasacha.com.br/",
 	"order": 1,
 	"hero": {
-		"headline": "Nós entregamos o COMO: técnica, gestão e mentoria em um só programa",
-		"subheadline": "A Pós-graduação com selo MEC que forma referências — com cases reais, mentoria individual e acompanhamento do primeiro módulo ao faturamento"
+		"headline": "A única Pós-Graduação em Saúde Estética e HOF do Brasil que também é Mentoria",
+		"subheadline": "Em 6 meses você domina técnica avançada, posicionamento premium e gestão de negócios — com 534h teóricas, 100h de prática supervisionada e mentoria individual com Dra. Sacha."
 	},
+	"badges": [
+		{ "label": "Pós-Graduação MEC", "icon": "GraduationCap" },
+		{ "label": "HOF · Odontólogos NOVO 2026", "icon": "Sparkles" },
+		{ "label": "6 meses · 534h + 100h prática", "icon": "BookOpen" },
+		{ "label": "Garantia de 7 dias", "icon": "ShieldCheck" }
+	],
 	"painPoints": [
 		{
 			"icon": "TrendingDown",
-			"title": "Renda limitada na clínica tradicional",
-			"description": "Você se formou, trabalha duro, mas o faturamento não cresce. A clínica convencional sozinha não paga o investimento que você fez na sua carreira."
+			"title": "Você estudou muito — e o reconhecimento não chega",
+			"description": "Anos de dedicação, mas o trabalho ainda não é valorizado pelo que realmente vale. A clínica tradicional sozinha não paga o investimento que você fez na sua carreira."
+		},
+		{
+			"icon": "Repeat",
+			"title": "Cansou de trocar hora por dinheiro",
+			"description": "Mais plantões, mais turnos, menos vida. Você sabe que pode construir um modelo de negócio que cresce sem te consumir — só falta o caminho certo."
 		},
 		{
 			"icon": "BookX",
-			"title": "Falta de habilidades em gestão e negócios",
-			"description": "A faculdade ensinou técnica, mas não ensinou a precificar, captar pacientes ou construir autoridade. Você é ótimo profissional, mas não sabe vender seu trabalho."
+			"title": "Falta o COMO: gestão, posicionamento, vendas",
+			"description": "A faculdade ensinou técnica. Não ensinou a precificar, captar pacientes premium ou construir autoridade. Você é ótimo profissional, mas sente que falta a parte de negócios."
 		},
 		{
 			"icon": "UserX",
-			"title": "Sem mentoria e sem direcionamento",
-			"description": "Você tenta aprender sozinho, consome conteúdo online, mas não tem quem te guie pelo caminho certo. Falta alguém que já chegou onde você quer chegar."
+			"title": "Sem mentor, sem direção, sem comunidade",
+			"description": "Você consome conteúdo, faz cursos avulsos, mas falta alguém que já chegou onde você quer chegar — e uma rede de profissionais no mesmo nível para crescer junto."
+		}
+	],
+	"story": {
+		"headline": "O TRINTAE3 não é mais uma pós-graduação",
+		"paragraphs": [
+			"Enquanto a maioria dos cursos entrega teoria e te deixa sozinho para descobrir o resto, o TRINTAE3 foi construído para entregar o que realmente faz diferença na carreira de um especialista.",
+			"Você sai sabendo aplicar com excelência técnica, posicionar a sua marca pessoal, precificar com confiança e gerir um negócio que cresce com previsibilidade — com Dra. Sacha e o corpo de mentores ao seu lado em todas as etapas."
+		],
+		"highlight": "Técnica. Posicionamento. Negócios. Tudo o que você precisa para construir a carreira (e a vida) que sempre soube que merecia."
+	},
+	"differentialPillars": [
+		{
+			"number": "01",
+			"title": "Técnica que você pratica de verdade — 534h teóricas + 100h supervisionadas",
+			"description": "Você não é espectador. Desde o primeiro módulo, a seringa está na sua mão: 3 dias em São Paulo no ITC com Fresh Frozen, 3 dias atendendo pacientes reais com preceptor na cidade da sua escolha e imersão clínica em Goiânia (Rennova + CEOHG)."
+		},
+		{
+			"number": "02",
+			"title": "Mentoria de Business e posicionamento high-ticket",
+			"description": "Você aprende a precificar com confiança, a vender sem desconto e a construir uma marca pessoal que atrai pacientes que valorizam o seu trabalho. Não é mais um técnico — é uma autoridade reconhecida."
+		},
+		{
+			"number": "03",
+			"title": "6 meses de suporte contínuo — TD33, masterclasses e comunidade",
+			"description": "Plantões Tira-Dúvidas TD33 em tempo real, masterclasses ao vivo com especialistas convidados e uma comunidade exclusiva onde sua próxima parceria ou indicação acontece todos os dias."
+		},
+		{
+			"number": "04",
+			"title": "Certificação MEC + HOF reconhecida nos Conselhos de Classe",
+			"description": "Pós-graduação lato sensu com selo MEC e, a partir de 2026, trilha de Harmonização Orofacial para odontólogos. Reconhecida pelos Conselhos de Classe para habilitação e atuação legal."
 		}
 	],
 	"pillars": [
 		{
 			"icon": "BookOpen",
 			"title": "Formação Técnica Avançada",
-			"description": "Grade curricular robusta com as técnicas mais atuais em harmonização facial, bioestimuladores, fios e protocolos combinados — tudo com embasamento científico."
+			"description": "Grade curricular robusta com as técnicas mais atuais em harmonização facial, bioestimuladores, fios, toxina botulínica e harmonização glútea — tudo com embasamento científico e aplicação supervisionada."
 		},
 		{
 			"icon": "Briefcase",
 			"title": "Mentoria de Negócios",
-			"description": "Acompanhamento individualizado para estruturar sua clínica, definir posicionamento, precificar corretamente e criar estratégias de captação de pacientes premium."
+			"description": "Acompanhamento individualizado para estruturar a sua clínica, definir posicionamento high-ticket, precificar corretamente e criar estratégias de captação de pacientes premium."
 		},
 		{
 			"icon": "Users",
 			"title": "Networking Premium",
-			"description": "Acesso a uma comunidade exclusiva de profissionais de alto nível, com eventos presenciais, imersões e troca de experiências que aceleram seu crescimento."
+			"description": "Acesso a uma comunidade exclusiva de profissionais de alto nível, com eventos presenciais, imersões e troca de experiências que aceleram o seu crescimento."
+		}
+	],
+	"audienceList": [
+		{ "label": "Enfermeiros" },
+		{ "label": "Biomédicos" },
+		{ "label": "Fisioterapeutas" },
+		{ "label": "Farmacêuticos" },
+		{
+			"label": "Odontólogos",
+			"highlight": true,
+			"note": "NOVO 2026 — trilha HOF (Harmonização Orofacial) incluída"
+		}
+	],
+	"practicePhases": [
+		{
+			"title": "Fase 1 — Cadáveres Fresh Frozen + Intercorrências",
+			"location": "São Paulo · ITC (maior centro de treinamento em cadáveres do Brasil)",
+			"days": "3 dias",
+			"description": "Você começa praticando da forma mais segura e completa possível. Anatomia aplicada, intercorrências reais e domínio dos planos faciais antes de tocar o primeiro paciente."
+		},
+		{
+			"title": "Fase 2 — Atendimento Real com Preceptor",
+			"location": "Cidade à sua escolha (todo o Brasil)",
+			"days": "3 dias consecutivos",
+			"description": "Você atende pacientes modelos ao lado de um preceptor especialista te supervisionando. Plano de tratamento, execução, acompanhamento — protagonismo desde o início."
+		},
+		{
+			"title": "Fase 3 — Imersão Clínica em Goiânia",
+			"location": "Goiânia · Rennova (presente em 23+ países) + CEOHG (câmara hiperbárica)",
+			"days": "Imersão completa",
+			"description": "Visita técnica na Rennova, atendimento clínico completo (plano de tratamento + venda + execução) e experiência prática no CEOHG. Você sai com a jornada completa do atendimento premium."
+		}
+	],
+	"curriculumModules": [
+		{
+			"number": "01",
+			"title": "Legislação e Responsabilidade Profissional",
+			"description": "Marco regulatório, conselhos de classe, prontuário, consentimento informado e responsabilidade civil em estética avançada.",
+			"hours": "24h"
+		},
+		{
+			"number": "02",
+			"title": "Anamnese e Avaliação Estética",
+			"description": "Avaliação facial e corporal, leitura de tipologias, fotografia clínica padronizada e planejamento integrado.",
+			"hours": "32h"
+		},
+		{
+			"number": "03",
+			"title": "Consulta Estética e Plano de Tratamento",
+			"description": "Da escuta clínica ao orçamento high-ticket — protocolos de consulta que convertem.",
+			"hours": "32h"
+		},
+		{
+			"number": "04",
+			"title": "Injetáveis Complementares",
+			"description": "Skinboosters, hidratação profunda, intradermoterapia — fundamentos seguros antes do avançado.",
+			"hours": "40h"
+		},
+		{
+			"number": "05",
+			"title": "Ativo · Aplicação Avançada",
+			"description": "Domínio técnico do gesto, controle da agulha, manejo da dor e cuidado pós-procedimento.",
+			"hours": "48h"
+		},
+		{
+			"number": "06",
+			"title": "Toxina Botulínica",
+			"description": "Aplicação na harmonização facial, full face, hiperidrose e protocolos combinados.",
+			"hours": "80h"
+		},
+		{
+			"number": "07",
+			"title": "Preenchedores Faciais",
+			"description": "Ácido hialurônico em terço médio, lábios, mandíbula, mento e arcos zigomáticos — leitura facial avançada.",
+			"hours": "96h"
+		},
+		{
+			"number": "08",
+			"title": "Bioestimuladores de Colágeno",
+			"description": "Hidroxiapatita de cálcio, PLLA e protocolos combinados de regeneração tecidual.",
+			"hours": "72h"
+		},
+		{
+			"number": "09",
+			"title": "Fios de Sustentação",
+			"description": "Técnicas de tração, lifting e suspensão facial — indicação, execução e gestão de complicações.",
+			"hours": "60h"
+		},
+		{
+			"number": "10",
+			"title": "Harmonização Glútea",
+			"description": "Bioestimulação e modelagem corporal com segurança e protocolo padronizado.",
+			"hours": "50h"
 		}
 	],
 	"benefits": [
-		"Título de pós-graduação reconhecido pelo MEC",
-		"Mentoria individual com Dra. Sacha Gualberto e equipe",
-		"Acesso a protocolos validados em mais de 5.000 procedimentos",
-		"Rede de networking com os melhores profissionais do Brasil",
-		"Suporte contínuo após a formação para consolidar resultados"
+		"Título de pós-graduação lato sensu reconhecido pelo MEC + trilha HOF para odontólogos",
+		"100 horas de prática supervisionada em 3 cidades (SP · cidade à escolha · Goiânia)",
+		"Mentoria individual de Business com Dra. Sacha Gualberto",
+		"Plantões Tira-Dúvidas TD33 em tempo real durante os 6 meses",
+		"1 ano de acesso à plataforma digital + app offline para revisão"
+	],
+	"deliverables": [
+		{
+			"title": "534 horas de Formação Teórico-Prática",
+			"description": "Grade curricular completa em 10 módulos, da legislação à harmonização glútea, com embasamento científico atualizado."
+		},
+		{
+			"title": "100 horas de Prática Supervisionada",
+			"description": "3 dias com Fresh Frozen no ITC/SP, 3 dias com pacientes reais e preceptor na cidade à sua escolha e imersão clínica em Goiânia."
+		},
+		{
+			"title": "Mentoria de Business e Posicionamento High-Ticket",
+			"description": "Sessões individuais e em grupo com Dra. Sacha para estruturar a sua marca, precificação e funil de pacientes premium."
+		},
+		{
+			"title": "Plantões Tira-Dúvidas TD33",
+			"description": "Encontros ao vivo durante todo o programa para tirar dúvidas técnicas e de negócio sem deixar nenhuma pergunta sem resposta."
+		},
+		{
+			"title": "1 Ano de Acesso à Plataforma + App Offline",
+			"description": "Reveja as aulas quantas vezes quiser, online ou offline pelo app exclusivo do TRINTAE3."
+		},
+		{
+			"title": "Masterclasses ao Vivo com Especialistas Convidados",
+			"description": "Sessões mensais com profissionais que vivem o que ensinam — técnica, negócio, marketing e gestão de carreira."
+		},
+		{
+			"title": "Certificação MEC Reconhecida nos Conselhos de Classe",
+			"description": "Habilitação para atuar legalmente em Saúde Estética Avançada, com selo MEC e trilha HOF para odontólogos."
+		},
+		{
+			"title": "Comunidade Exclusiva de Mentorados TRINTAE3",
+			"description": "Networking premium com profissionais no mesmo nível — sua próxima parceria, paciente ou indicação acontece aqui."
+		},
+		{
+			"title": "Acompanhamento de Carreira Pós-Formação",
+			"description": "Suporte contínuo após a formação para consolidar resultados, ajustar precificação e escalar com previsibilidade."
+		}
+	],
+	"bonus": [
+		{
+			"title": "Comunidade TRINTAE3 — Networking Premium",
+			"description": "O ambiente onde você está diz muito sobre onde você vai chegar. Acesso a uma rede de profissionais que pensam grande, com trocas diárias e parcerias estratégicas."
+		},
+		{
+			"title": "Mentoria de Mentalidade e Alta Performance",
+			"description": "Sessões focadas em mindset de especialista, gestão do tempo e construção de marca pessoal de autoridade."
+		}
 	],
 	"differentials": [
 		{
-			"title": "Pós-graduação + Mentoria integradas",
-			"description": "Único programa do mercado que combina a credibilidade de uma pós-graduação acadêmica com o acompanhamento prático de uma mentoria de negócios."
+			"title": "Pós-graduação + Mentoria integradas — único no Brasil",
+			"description": "Combine a credibilidade acadêmica da pós-graduação com o acompanhamento prático de uma mentoria de negócios. Nenhum outro programa do mercado entrega os dois."
 		},
 		{
-			"title": "Cases reais desde o primeiro módulo",
-			"description": "Você não espera se formar para aplicar. Desde o início, trabalha com pacientes reais sob supervisão direta, construindo portfólio e confiança."
+			"title": "Prática real desde o primeiro módulo",
+			"description": "Você não espera 18 meses para aplicar. Desde o início trabalha com cadáveres Fresh Frozen, pacientes reais e preceptores especialistas — construindo portfólio e confiança."
 		},
 		{
-			"title": "Metodologia validada pela Dra. Sacha",
-			"description": "Desenvolvida por quem já formou mais de 5.000 profissionais e construiu uma das maiores referências em saúde estética do Brasil."
+			"title": "Metodologia validada pela Dra. Sacha Gualberto",
+			"description": "Desenvolvida por quem tem 13+ anos de experiência, certificações em Harvard e Xiamen e formou centenas de profissionais que hoje são referência no Brasil."
 		}
 	],
+	"bio": {
+		"name": "Dra. Sacha Gualberto",
+		"title": "Enfermeira esteta, mentora e CVO do Grupo US",
+		"photo": "/images/sacha-about.webp",
+		"paragraphs": [
+			"Sou enfermeira esteta com mais de 13 anos como empresária da saúde, CVO da minha empresa de Educação Digital, especialista em Saúde Estética Avançada e portadora de certificações internacionais por Harvard e Xiamen.",
+			"Formei centenas de profissionais que hoje são referência no mercado brasileiro — e construí o TRINTAE3 para resolver o problema que vi se repetir em todos eles: técnica de excelência sem visão de negócio é um teto baixo demais para quem sonha grande.",
+			"Você não precisa fazer esse caminho sozinha. Com o direcionamento certo, você acelera seus resultados, constrói autoridade e atrai os pacientes que valorizam o seu trabalho — sem abrir mão da sua essência."
+		]
+	},
+	"guarantee": {
+		"title": "7 dias de garantia. Risco zero.",
+		"body": "Entre, assista, participe. Se por qualquer motivo o TRINTAE3 não for o que você esperava, você tem 7 dias corridos para pedir 100% do seu dinheiro de volta — sem perguntas, sem burocracia.",
+		"daysCount": 7
+	},
 	"faqs": [
 		{
-			"question": "Quem pode participar do TRINTAE3?",
-			"answer": "O programa é voltado para profissionais da saúde graduados: enfermeiros, biomédicos, farmacêuticos e fisioterapeutas que desejam atuar ou já atuam na área de estética avançada."
+			"question": "Quanto tempo tenho acesso ao conteúdo?",
+			"answer": "Você tem 1 ano completo de acesso à plataforma digital, podendo assistir às aulas quantas vezes quiser, online ou offline pelo app exclusivo do TRINTAE3."
 		},
 		{
-			"question": "Qual a duração do programa?",
-			"answer": "O TRINTAE3 tem duração de 18 meses, com encontros mensais presenciais e acompanhamento online contínuo entre os módulos."
+			"question": "Quando posso começar?",
+			"answer": "Assim que a sua matrícula for confirmada, você recebe acesso imediato à plataforma e ao conteúdo disponível, podendo começar pela teoria enquanto se prepara para as práticas presenciais."
 		},
 		{
-			"question": "O título é reconhecido pelo MEC?",
-			"answer": "Sim. O TRINTAE3 confere título de pós-graduação lato sensu reconhecido pelo MEC, além do certificado de mentoria prática em negócios de saúde estética."
+			"question": "Qual o prazo para desistência?",
+			"answer": "Você tem 7 dias corridos após a compra para solicitar o reembolso integral, sem nenhuma justificativa necessária."
+		},
+		{
+			"question": "Terei custos com hospedagem e passagens para as práticas presenciais?",
+			"answer": "As práticas presenciais acontecem em diversas cidades do Brasil (São Paulo, cidade à sua escolha e Goiânia). Os custos de deslocamento e hospedagem são de responsabilidade do aluno. A programação é divulgada com antecedência para que você possa se organizar com tranquilidade."
+		},
+		{
+			"question": "Odontólogos podem participar?",
+			"answer": "Sim. A partir de 2026 o TRINTAE3 é HOF (Harmonização Orofacial) e odontólogos têm acesso completo à jornada de formação e mentoria, com trilha técnica e regulatória específica."
+		},
+		{
+			"question": "Qual a duração total do programa?",
+			"answer": "O TRINTAE3 dura 6 meses de imersão completa, com 534 horas teóricas, 100 horas de prática supervisionada em 3 cidades, mentoria de business e suporte contínuo via TD33 e comunidade."
 		},
 		{
 			"question": "Posso parcelar o investimento?",
-			"answer": "Sim. O TRINTAE3 oferece parcelamento em até 24 vezes no cartão de crédito, além de condições especiais para pagamento à vista ou via boleto. Fale com nossa equipe pelo WhatsApp para receber a tabela atualizada de valores e simular o parcelamento ideal para você."
+			"answer": "Sim. Falamos sobre valores, formas de pagamento e parcelamento diretamente com a nossa equipe pelo WhatsApp, para apresentar a melhor condição alinhada ao seu perfil. Toque no botão de WhatsApp para conversar com a Laura."
 		}
 	],
 	"cta": {
-		"label": "Quero me inscrever",
-		"url": "https://trintae3.drasacha.com.br/",
-		"whatsappMessage": "Olá, Laura! Quero saber mais sobre o TRINTAE3",
+		"label": "Quero ser TRINTAE3",
+		"url": "https://wa.me/556294705081?text=Ol%C3%A1%2C%20Laura!%20Quero%20saber%20mais%20sobre%20o%20TRINTAE3%20e%20me%20tornar%20Especialista%20em%20Sa%C3%BAde%20Est%C3%A9tica%20Avan%C3%A7ada.",
+		"whatsappMessage": "Olá, Laura! Quero saber mais sobre o TRINTAE3 e me tornar Especialista em Saúde Estética Avançada.",
+		"helperText": "Vagas limitadas por turma. Fale com a Laura para receber a tabela atualizada, prazos de inscrição e detalhes das fases presenciais.",
 		"type": "primary"
+	},
+	"secondaryCTA": {
+		"label": "Prefere preencher um formulário?",
+		"url": "https://typebot.co/trintae3-abril",
+		"helperText": "Caminho alternativo: deixe seus dados no formulário e a Laura entra em contato em até 1 dia útil."
 	},
 	"testimonials": [
 		{
 			"name": "Dra. Fernanda Oliveira",
 			"role": "Enfermeira Esteta — São Paulo/SP",
-			"quote": "O TRINTAE3 transformou minha carreira. Saí de um faturamento de R$ 8 mil para mais de R$ 40 mil por mês em menos de um ano. A mentoria fez toda a diferença."
+			"quote": "O TRINTAE3 transformou minha carreira. Saí de um faturamento de R$ 8 mil para mais de R$ 40 mil por mês em menos de um ano. A combinação de técnica avançada com a mentoria de negócios fez toda a diferença."
 		},
 		{
 			"name": "Dr. Rafael Mendes",
 			"role": "Biomédico Esteticista — Belo Horizonte/MG",
-			"quote": "Já fiz outros cursos, mas nenhum me deu o direcionamento prático que o TRINTAE3 oferece. Hoje tenho lista de espera na clínica e uma equipe estruturada."
+			"quote": "Já fiz outros cursos, mas nenhum me deu o direcionamento prático que o TRINTAE3 oferece. Hoje tenho lista de espera na clínica, uma equipe estruturada e clareza sobre cada próximo passo do negócio."
 		}
 	]
 }

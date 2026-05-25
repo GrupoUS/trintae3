@@ -1,12 +1,17 @@
 ---
 import Button from "../components/shared/Button.astro";
 import Layout from "../layouts/Layout.astro";
+import { whatsappUrlWithText } from "../lib/whatsapp";
+
+const whatsappUrl = whatsappUrlWithText(
+	"Olá, Laura! Caí em uma página que não existe no TRINTAE3 — pode me ajudar?",
+);
 ---
 
 <Layout
-	title="Página não encontrada (404) — Grupo US"
-	description="Link incorreto ou página movida. Volte à home do Grupo US ou fale conosco para achar cursos, pós-graduação e mentorias em saúde estética."
-	ogImage="/og/404.png"
+	title="Página não encontrada (404) — TRINTAE3"
+	description="Link incorreto ou página movida. Volte à home do TRINTAE3 ou fale com a Laura no WhatsApp."
+	ogImage="/og/trintae3.png"
 >
 	<section class="min-h-[70vh] flex items-center justify-center px-4 py-32">
 		<div class="max-w-lg mx-auto text-center" data-reveal="up">
@@ -17,12 +22,13 @@ import Layout from "../layouts/Layout.astro";
 				Página não encontrada
 			</h1>
 			<p class="text-text-muted text-lg mb-10 max-w-md mx-auto">
-				O endereço pode ter mudado. Use a home para ver programas ou o contato
-				para falar com a equipe.
+				O endereço pode ter mudado. Volte para a home do TRINTAE3 ou fale com a Laura.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4 justify-center">
 				<Button href="/" variant="primary">Voltar para o início</Button>
-				<Button href="/contato" variant="outline">Fale conosco</Button>
+				<Button href={whatsappUrl} variant="outline" target="_blank" ariaLabel="Falar com Laura no WhatsApp">
+					Falar com Laura
+				</Button>
 			</div>
 		</div>
 	</section>

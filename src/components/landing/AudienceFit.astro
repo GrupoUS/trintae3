@@ -1,0 +1,125 @@
+---
+import SectionHeading from "../shared/SectionHeading.astro";
+
+interface Props {
+	audienceList: Array<{
+		label: string;
+		highlight?: boolean;
+		note?: string;
+	}>;
+	notFor?: Array<{ label: string; note?: string }>;
+}
+
+const { audienceList, notFor } = Astro.props;
+---
+
+<section class="px-4 py-20 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-7xl">
+		<SectionHeading
+			title="Para quem o TRINTAE3 foi criado"
+			subtitle="Para o profissional da saúde que sabe que pode ir além"
+		/>
+
+		<div
+			class:list={[
+				"mt-14 grid gap-8",
+				notFor && notFor.length > 0 ? "lg:grid-cols-2" : "lg:grid-cols-1",
+			]}
+		>
+			<!-- Para quem é -->
+			<div
+				class="glass-card rounded-2xl border-t-2 border-t-gold p-6 md:p-8"
+				data-reveal="left"
+			>
+				<div class="flex items-center gap-3">
+					<svg
+						class="h-7 w-7 text-gold"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						aria-hidden="true"
+					>
+						<path d="M21.801 10A10 10 0 1 1 17 3.335" />
+						<path d="m9 11 3 3L22 4" />
+					</svg>
+					<h3 class="font-serif text-xl font-bold text-gold md:text-2xl">
+						Para quem é
+					</h3>
+				</div>
+				<ul class="mt-6 space-y-3" role="list">
+					{audienceList.map((item) => (
+						<li
+							class:list={[
+								"flex items-start gap-3 rounded-lg border px-4 py-3",
+								item.highlight
+									? "border-gold/40 bg-gold/10"
+									: "border-gold/10 bg-navy-light/40",
+							]}
+						>
+							<span class="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>
+							<div>
+								<p
+									class:list={[
+										"font-semibold",
+										item.highlight ? "text-gold-light" : "text-text-primary",
+									]}
+								>
+									{item.label}
+								</p>
+								{item.note && (
+									<p class="mt-1 text-xs uppercase tracking-[0.06em] text-gold-light">
+										{item.note}
+									</p>
+								)}
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<!-- Para quem NÃO é -->
+			{notFor && notFor.length > 0 && (
+				<div
+					class="glass-card rounded-2xl border-t-2 border-t-text-muted/40 p-6 md:p-8"
+					data-reveal="right"
+				>
+					<div class="flex items-center gap-3">
+						<svg
+							class="h-7 w-7 text-text-muted"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<circle cx="12" cy="12" r="10" />
+							<path d="m15 9-6 6" />
+							<path d="m9 9 6 6" />
+						</svg>
+						<h3 class="font-serif text-xl font-bold text-text-muted md:text-2xl">
+							Para quem NÃO é
+						</h3>
+					</div>
+					<ul class="mt-6 space-y-3" role="list">
+						{notFor.map((item) => (
+							<li class="flex items-start gap-3 rounded-lg border border-text-muted/15 bg-navy-light/30 px-4 py-3">
+								<span class="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-text-muted/60" aria-hidden="true"></span>
+								<div>
+									<p class="font-semibold text-text-muted">{item.label}</p>
+									{item.note && (
+										<p class="mt-1 text-xs text-text-muted/70">{item.note}</p>
+									)}
+								</div>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+		</div>
+	</div>
+</section>

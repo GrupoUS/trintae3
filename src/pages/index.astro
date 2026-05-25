@@ -1,109 +1,137 @@
 ---
 import { getCollection } from "astro:content";
-import AboutPreview from "../components/home/AboutPreview.astro";
-import CTASection from "../components/home/CTASection.astro";
-import Hero from "../components/home/Hero.astro";
-import { JourneyTimeline } from "../components/home/JourneyTimeline.tsx";
-import ProductsGrid from "../components/home/ProductsGrid.astro";
-import StatsSection from "../components/home/StatsSection.astro";
+import AudienceFit from "../components/landing/AudienceFit.astro";
+import CurriculumModules from "../components/landing/CurriculumModules.astro";
+import Deliverables from "../components/landing/Deliverables.astro";
+import Differentials from "../components/landing/Differentials.astro";
+import FAQ from "../components/landing/FAQ.astro";
+import Guarantee from "../components/landing/Guarantee.astro";
+import LandingCTA from "../components/landing/LandingCTA.astro";
+import LandingHero from "../components/landing/LandingHero.astro";
+import MobileCTABar from "../components/landing/MobileCTABar.astro";
+import NeonBio from "../components/landing/NeonBio.astro";
+import NeonBonus from "../components/landing/NeonBonus.astro";
+import NeonStory from "../components/landing/NeonStory.astro";
+import PainPoints from "../components/landing/PainPoints.astro";
+import Pillars from "../components/landing/Pillars.astro";
+import PracticePhases from "../components/landing/PracticePhases.astro";
 import { TestimonialCarousel } from "../components/landing/TestimonialCarousel.tsx";
 import Layout from "../layouts/Layout.astro";
 
 const products = await getCollection("products");
+const product = products.find((p) => p.data.slug === "trintae3");
+if (!product) throw new Error("Product trintae3 not found");
+const d = product.data;
 
-/* ── Journey Timeline data ── */
-const canonicalJourney = [
-	{
-		slug: "curso-auriculo",
-		stage: "01",
-		eyebrow: "Entrada",
-		summary:
-			"Entrada acessível para ganhar repertório técnico e colocar a primeira oferta em movimento.",
-	},
-	{
-		slug: "comunidade-us",
-		stage: "02",
-		eyebrow: "Comunidade",
-		summary:
-			"Continuidade, networking e atualização recorrente para manter execução, proximidade e referência de mercado.",
-	},
-	{
-		slug: "trintae3",
-		stage: "03",
-		eyebrow: "Formação sólida",
-		summary:
-			"Aprofundamento técnico e base de negócios para sair do operacional e construir autoridade.",
-	},
-	{
-		slug: "mentoria-black-neon",
-		stage: "04",
-		eyebrow: "Escala de negócio",
-		summary:
-			"Gestão, time, faturamento e previsibilidade para transformar uma boa operação em empresa escalável.",
-	},
-	{
-		slug: "otb",
-		stage: "05",
-		eyebrow: "Elite global",
-		summary:
-			"Etapa internacional para reconhecimento, networking premium e repertório de business em outro nível.",
-	},
-] as const;
+const SITE_URL = "https://trintae3.drasacha.com.br";
 
-const complementaryExperienceSlugs = ["neon-dash", "na-mesa-certa"] as const;
-const productsBySlug = new Map(
-	products.map((entry) => [entry.data.slug, entry.data]),
-);
+const courseSchema = {
+	"@context": "https://schema.org",
+	"@type": "Course",
+	name: d.name,
+	description: d.description,
+	url: `${SITE_URL}/`,
+	image: `${SITE_URL}${d.image}`,
+	inLanguage: "pt-BR",
+	provider: {
+		"@type": "EducationalOrganization",
+		name: "TRINTAE3 · Dra. Sacha Gualberto",
+		url: SITE_URL,
+		sameAs: "https://instagram.com/drasachagualberto",
+	},
+	educationalCredentialAwarded:
+		"Pós-Graduação Lato Sensu em Saúde Estética Avançada (MEC) + Trilha HOF",
+	hasCourseInstance: {
+		"@type": "CourseInstance",
+		courseMode: "blended",
+		courseWorkload: "P634H",
+		instructor: {
+			"@type": "Person",
+			name: "Dra. Sacha Gualberto",
+			sameAs: "https://instagram.com/drasachagualberto",
+		},
+		location: [
+			{
+				"@type": "Place",
+				name: "São Paulo · ITC",
+				address: "São Paulo, SP, Brasil",
+			},
+			{
+				"@type": "Place",
+				name: "Goiânia · Rennova + CEOHG",
+				address: "Goiânia, GO, Brasil",
+			},
+		],
+	},
+	about: d.audience,
+};
 
-const stages = canonicalJourney.map((item) => {
-	const product = productsBySlug.get(item.slug);
-	if (!product)
-		throw new Error(
-			`JourneyTimeline: produto ausente para slug "${item.slug}"`,
-		);
-	return {
-		slug: item.slug,
-		stage: item.stage,
-		eyebrow: item.eyebrow,
-		summary: item.summary,
-		productName: product.name,
-		tagline: product.tagline,
-		pageHref: product.externalSiteUrl ?? `/${product.slug}`,
-		iconName: product.icon,
-	};
-});
-
-const complementaryExperiences = complementaryExperienceSlugs
-	.map((slug) => productsBySlug.get(slug))
-	.filter((p): p is NonNullable<typeof p> => p !== undefined)
-	.map((product) => ({
-		name: product.name,
-		href: product.externalSiteUrl ?? `/${product.slug}`,
-	}));
-
-/* ── Testimonials data ── */
-const homeTestimonials = products
-	.flatMap((p) =>
-		p.data.testimonials.map((t) => ({
-			name: t.name,
-			role: `${t.role} (${p.data.name})`,
-			quote: t.quote,
-		})),
-	)
-	.slice(0, 9);
+const totalLabel =
+	"534 horas teóricas + 100 horas de prática supervisionada — total de 634h em 6 meses";
 ---
 
 <Layout
-	title="Grupo US — Formação e negócios em saúde estética avançada"
-	description="Cursos, pós, mentoria e comunidade com a Dra. Sacha Gualberto: trilha da entrada à escala de negócio. Veja os programas do ecossistema e o próximo passo para a sua carreira."
-	ogImage="/og/home.png"
+	title="TRINTAE3 — Pós-Graduação MEC + Mentoria em Saúde Estética Avançada e HOF"
+	description={d.description}
+	ogImage="/og/trintae3.png"
 	activeNav="home"
+	whatsappMessage={d.cta.whatsappMessage}
+	hasBottomBar={true}
+	jsonLd={courseSchema}
 >
-	<Hero />
-	<ProductsGrid />
-	<JourneyTimeline client:visible stages={stages} complementary={complementaryExperiences} />
-	<TestimonialCarousel client:visible testimonials={homeTestimonials} />
-	<StatsSection />
-	<AboutPreview />
-	<CTASection />
+	<div class="pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-0">
+		<LandingHero
+			name={d.name}
+			tagline={d.tagline}
+			hero={d.hero}
+			type={d.type}
+			cta={d.cta}
+			badges={d.badges}
+		/>
+
+		<PainPoints audience={d.audience} painPoints={d.painPoints} />
+
+		{d.story && <NeonStory story={d.story} />}
+
+		{d.differentialPillars && (
+			<Differentials differentials={d.differentialPillars} />
+		)}
+
+		{d.audienceList && <AudienceFit audienceList={d.audienceList} />}
+
+		<Pillars pillars={d.pillars} />
+
+		{d.practicePhases && (
+			<PracticePhases phases={d.practicePhases} totalLabel={totalLabel} />
+		)}
+
+		{d.curriculumModules && (
+			<CurriculumModules modules={d.curriculumModules} totalLabel={totalLabel} />
+		)}
+
+		{d.deliverables && <Deliverables deliverables={d.deliverables} />}
+
+		{d.bonus && <NeonBonus bonus={d.bonus} />}
+
+		<LandingCTA name={d.name} cta={d.cta} />
+
+		<TestimonialCarousel client:visible testimonials={d.testimonials} />
+
+		{d.guarantee && (
+			<Guarantee
+				guarantee={d.guarantee}
+				whatsappMessage={d.cta.whatsappMessage}
+				helpLabel="Tem dúvidas sobre a garantia? Fale com a Laura"
+			/>
+		)}
+
+		{d.bio && <NeonBio bio={d.bio} faculty={d.faculty} />}
+
+		<Differentials differentials={d.differentials} />
+
+		<FAQ faqs={d.faqs} />
+
+		<LandingCTA name={d.name} cta={d.cta} />
+	</div>
+	<MobileCTABar cta={d.cta} />
 </Layout>

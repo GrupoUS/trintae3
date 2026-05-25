@@ -1,0 +1,76 @@
+---
+import { whatsappUrlWithText } from "../../lib/whatsapp";
+import Button from "../shared/Button.astro";
+
+interface Props {
+	guarantee: {
+		title: string;
+		body: string;
+		daysCount: number;
+	};
+	whatsappMessage?: string;
+	helpLabel?: string;
+}
+
+const { guarantee, whatsappMessage, helpLabel } = Astro.props;
+
+const helpUrl = whatsappMessage
+	? whatsappUrlWithText(whatsappMessage)
+	: undefined;
+---
+
+<section class="px-4 py-20 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-5xl">
+		<div
+			class="glass-card relative overflow-hidden rounded-3xl p-8 md:p-12 lg:p-14"
+			data-reveal="scale"
+		>
+			<div class="grid grid-cols-1 items-center gap-8 md:grid-cols-12">
+				<!-- Selo -->
+				<div class="md:col-span-4">
+					<div class="relative mx-auto flex h-36 w-36 items-center justify-center rounded-full border-2 border-gold bg-gold/10 text-gold gold-glow md:h-44 md:w-44">
+						<svg
+							class="h-16 w-16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.5"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							aria-hidden="true"
+						>
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+							<path d="m9 12 2 2 4-4" />
+						</svg>
+						<span class="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-gold bg-navy px-4 py-1 font-serif text-sm font-bold text-gold">
+							{guarantee.daysCount} dias
+						</span>
+					</div>
+				</div>
+
+				<!-- Texto -->
+				<div class="md:col-span-8">
+					<h2 class="font-serif text-2xl font-bold text-gold md:text-3xl">
+						{guarantee.title}
+					</h2>
+					<p class="mt-4 text-base leading-relaxed text-text-muted md:text-lg">
+						{guarantee.body}
+					</p>
+					{helpUrl && (
+						<div class="mt-6">
+							<Button
+								variant="ghost"
+								href={helpUrl}
+								size="md"
+								target="_blank"
+								ariaLabel="Falar com a Laura no WhatsApp sobre a garantia"
+							>
+								{helpLabel ?? "Tem dúvidas? Fale com a Laura"}
+							</Button>
+						</div>
+					)}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

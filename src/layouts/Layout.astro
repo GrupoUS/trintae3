@@ -1,10 +1,8 @@
 ---
 import { Font } from "astro:assets";
-import { getCollection } from "astro:content";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
 import { WhatsAppFloatingButton } from "../components/shared/WhatsAppFloatingButton.tsx";
-import { productNavLinksFromCollection } from "../lib/productsNav";
 import "../styles/global.css";
 
 interface Props {
@@ -20,8 +18,8 @@ interface Props {
 
 const {
 	title,
-	description = "Formação, mentoria e comunidade em saúde estética avançada com o Grupo US. Trilha clara da técnica à escala de negócio.",
-	ogImage = "/og-image.png",
+	description = "TRINTAE3 — Pós-Graduação MEC + Mentoria em Saúde Estética Avançada e HOF com Dra. Sacha Gualberto. 6 meses, 534h teóricas + 100h de prática supervisionada.",
+	ogImage = "/og/trintae3.png",
 	activeNav,
 	breadcrumbs,
 	whatsappMessage,
@@ -29,30 +27,27 @@ const {
 	jsonLd,
 } = Astro.props;
 
-const productNavLinks = productNavLinksFromCollection(
-	await getCollection("products"),
-);
-
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const organizationSchema = {
 	"@context": "https://schema.org",
-	"@type": "Organization",
-	name: "Grupo US",
-	url: "https://grupous.com.br",
-	logo: "https://grupous.com.br/logo-grupo-us.png",
+	"@type": "EducationalOrganization",
+	name: "TRINTAE3 · Dra. Sacha Gualberto",
+	url: Astro.site?.toString() ?? "https://trintae3.drasacha.com.br/",
+	logo: new URL("/images/products/trintae3.svg", Astro.site).toString(),
 	description:
-		"Formação, mentoria e comunidade em saúde estética avançada. Ecossistema para profissionais que buscam técnica, gestão e escala de negócio.",
+		"Pós-Graduação MEC + Mentoria em Saúde Estética Avançada e HOF para enfermeiros, biomédicos, fisioterapeutas, farmacêuticos e odontólogos.",
 	founder: {
 		"@type": "Person",
 		name: "Dra. Sacha Gualberto",
-		jobTitle: "CEO",
+		jobTitle: "CEO e mentora principal",
 		sameAs: ["https://instagram.com/drasachagualberto"],
 	},
 	contactPoint: {
 		"@type": "ContactPoint",
 		telephone: "+55-62-9470-5081",
-		contactType: "customer service",
+		contactType: "sales",
+		areaServed: "BR",
 		availableLanguage: "Portuguese",
 	},
 	sameAs: [
@@ -84,7 +79,7 @@ const organizationSchema = {
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={new URL(ogImage, Astro.site)} />
 		<meta property="og:locale" content="pt_BR" />
-		<meta property="og:site_name" content="Grupo US" />
+		<meta property="og:site_name" content="TRINTAE3" />
 
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
@@ -96,7 +91,7 @@ const organizationSchema = {
 		<Font cssVariable="--font-playfair" />
 		<Font cssVariable="--font-inter" />
 
-		<!-- JSON-LD Organization Schema -->
+		<!-- JSON-LD EducationalOrganization Schema -->
 		<script
 			is:inline
 			type="application/ld+json"
@@ -110,12 +105,12 @@ const organizationSchema = {
 				set:html={JSON.stringify({
 					"@context": "https://schema.org",
 					"@type": "BreadcrumbList",
-					"itemListElement": breadcrumbs.map((item, index) => ({
+					itemListElement: breadcrumbs.map((item, index) => ({
 						"@type": "ListItem",
-						"position": index + 1,
-						"name": item.name,
-						"item": item.url
-					}))
+						position: index + 1,
+						name: item.name,
+						item: item.url,
+					})),
 				})}
 			/>
 		)}
@@ -141,12 +136,11 @@ const organizationSchema = {
 	</head>
 
 	<body class="bg-navy font-sans text-text-primary antialiased">
-		<!-- Skip Link -->
 		<a href="#conteudo-principal" class="skip-link">
 			Pular para o conteúdo principal
 		</a>
 
-		<Header activeNav={activeNav} productNavLinks={productNavLinks} />
+		<Header activeNav={activeNav} ctaMessage={whatsappMessage} />
 
 		<main id="conteudo-principal" tabindex="-1">
 			<slot />
@@ -158,9 +152,8 @@ const organizationSchema = {
 			hasBottomBar={hasBottomBar}
 		/>
 
-		<Footer productNavLinks={productNavLinks} />
+		<Footer />
 
-		<!-- IntersectionObserver for scroll-reveal animations -->
 		<script>
 			function initReveal() {
 				const elements = document.querySelectorAll("[data-reveal]");

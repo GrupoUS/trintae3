@@ -1,0 +1,62 @@
+---
+import SectionHeading from "../shared/SectionHeading.astro";
+
+interface Props {
+	modules: Array<{
+		number: string;
+		title: string;
+		description: string;
+		hours?: string;
+	}>;
+	totalLabel?: string;
+}
+
+const { modules, totalLabel } = Astro.props;
+---
+
+<section class="bg-navy-light/30 px-4 py-20 sm:px-6 lg:px-8">
+	<div class="mx-auto max-w-7xl">
+		<SectionHeading
+			title="Grade curricular que transforma você em especialista"
+			subtitle="Do zero ao avançado, com embasamento científico e supervisão clínica"
+		/>
+
+		{totalLabel && (
+			<p
+				class="mx-auto mt-6 max-w-2xl text-center text-sm font-semibold uppercase tracking-[0.08em] text-gold"
+				data-reveal="up"
+			>
+				{totalLabel}
+			</p>
+		)}
+
+		<ol class="mt-12 grid grid-cols-1 gap-4 md:grid-cols-2" role="list">
+			{modules.map((mod, index) => (
+				<li
+					class="group flex items-start gap-5 rounded-2xl border border-gold/10 bg-navy-light/50 p-5 transition duration-300 hover:border-gold/30 hover:bg-navy-light/80 hover:shadow-lg hover:shadow-gold/5"
+					data-reveal="up"
+					data-reveal-delay={String((index % 4) + 1)}
+				>
+					<span class="font-serif text-3xl font-bold text-gold transition-transform duration-300 group-hover:scale-110">
+						{mod.number}
+					</span>
+					<div class="flex-1">
+						<div class="flex items-baseline justify-between gap-3">
+							<h3 class="font-serif text-base font-semibold text-text-primary md:text-lg">
+								{mod.title}
+							</h3>
+							{mod.hours && (
+								<span class="shrink-0 rounded-full border border-gold/20 bg-gold/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gold">
+									{mod.hours}
+								</span>
+							)}
+						</div>
+						<p class="mt-2 text-sm leading-relaxed text-text-muted">
+							{mod.description}
+						</p>
+					</div>
+				</li>
+			))}
+		</ol>
+	</div>
+</section>
