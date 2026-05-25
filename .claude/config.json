@@ -1,0 +1,104 @@
+{
+  "$schema": "./config.schema.json",
+  "project": {
+    "name": "gpus-site",
+    "displayName": "Grupo US — Site Institucional",
+    "purpose": "Static marketing site for Grupo US.",
+    "stack": "astro-static-tailwindv4",
+    "stackSummary": "Astro 6 (static-only) · Bun · Tailwind CSS v4 · React 19 (islands; minimal) · Railway · Lucide React · Playfair Display + Inter",
+    "domain": "grupous.com.br",
+    "stagingUrl": "http://localhost:4321",
+    "productionUrl": "https://grupous.com.br",
+    "locale": "pt-BR",
+    "brand": "grupo-us"
+  },
+  "skills": {
+    "brand": "grupo-us",
+    "theme": "gpus-theme",
+    "stack": "astro"
+  },
+  "cardinals": {
+    "renderMode": "static-only",
+    "spa": "forbidden",
+    "ssrAdapter": "forbidden",
+    "contentSsot": "src/content/",
+    "themeSsot": "src/styles/global.css",
+    "iconLibrary": "lucide-react"
+  },
+  "whatsapp": {
+    "enabled": true,
+    "sdrName": "Laura",
+    "sdrE164": "+556294705081",
+    "messagePrefix": "Olá, Laura!",
+    "ssotFile": "src/lib/whatsapp.ts"
+  },
+  "commit": {
+    "scopes": [
+      "site",
+      "theme",
+      "content",
+      "seo",
+      "astro",
+      "redirects",
+      "config",
+      "scripts",
+      ".claude",
+      "deps",
+      "a11y",
+      "perf"
+    ]
+  },
+  "paths": {
+    "backendRoot": "",
+    "frontendRoot": "src",
+    "schemaRoot": "",
+    "stylesRoot": "src/styles",
+    "componentsRoot": "src/components",
+    "libRoot": "src/lib",
+    "contentRoot": "src/content",
+    "pagesRoot": "src/pages",
+    "layoutsRoot": "src/layouts"
+  },
+  "tooling": {
+    "packageManager": "bun",
+    "buildTool": "astro",
+    "typeChecker": "astro-check",
+    "linter": "biome",
+    "testRunner": "",
+    "deployer": "railway",
+    "frontendFramework": "astro+react-islands",
+    "database": "",
+    "orm": ""
+  },
+  "gates": {
+    "lighthouse": {
+      "performance": 95,
+      "accessibility": 95,
+      "bestPractices": 95,
+      "seo": 95
+    },
+    "lcp": 2500,
+    "cls": 0,
+    "inp": 100,
+    "initialJsKb": 50
+  },
+  "protectedFiles": {
+    "exact": [
+      "astro.config.mjs",
+      "src/lib/whatsapp.ts",
+      "src/content.config.ts",
+      "package.json",
+      "tsconfig.json",
+      "biome.json",
+      "lefthook.yml"
+    ],
+    "segments": [],
+    "contains": [
+      "bun.lockb"
+    ]
+  },
+  "rulesDir": ".claude/rules",
+  "templatesDir": ".claude/templates",
+  "agentsFile": "AGENTS.md",
+  "claudeMdFile": ".claude/CLAUDE.md"
+}

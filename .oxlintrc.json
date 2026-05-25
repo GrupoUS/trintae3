@@ -1,0 +1,24 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    ".astro/**",
+    "build/**",
+    "coverage/**",
+    "src/layouts/**",
+    ".claude/skills/**"
+  ],
+  "rules": {
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/anchor-has-content": "off",
+    "import/no-unassigned-import": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-undef": "error"
+  }
+}

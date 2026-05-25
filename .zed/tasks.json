@@ -1,0 +1,159 @@
+[
+  {
+    "label": "🔎 Gate Local: lint (Biome + OxLint)",
+    "command": "bun",
+    "args": ["run", "lint"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "🚀 Fix Workspace: bun run lint:fix (Biome --write + OxLint --fix)",
+    "command": "bun",
+    "args": ["run", "lint:fix"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "never",
+    "save": "all"
+  },
+  {
+    "label": "🔎 Lint Workspace: Biome check (todo o projeto)",
+    "command": "bunx",
+    "args": ["biome", "check", "src", "astro.config.mjs"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "🔎 Lint Workspace: OxLint (todo o projeto)",
+    "command": "bunx",
+    "args": [
+      "oxlint",
+      "src",
+      "--ignore-pattern",
+      "src/layouts/*",
+      "--format=unix"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "🔎 Lint Workspace: OxLint (pasta atual)",
+    "command": "bunx",
+    "args": [
+      "oxlint",
+      "${ZED_RELATIVE_DIR:.}",
+      "--ignore-pattern",
+      "src/layouts/*",
+      "--format=unix"
+    ],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "🩺 Astro Check (type + content schema)",
+    "command": "bunx",
+    "args": ["astro", "check"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "🏗️ Build: bun run build",
+    "command": "bun",
+    "args": ["run", "build"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "save": "all"
+  },
+  {
+    "label": "🛡️ Predeploy gate (lint + astro check + build)",
+    "command": "bun",
+    "args": ["run", "predeploy"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "save": "all"
+  },
+  {
+    "label": "🌐 Check external URLs (redirect tri-sync)",
+    "command": "bun",
+    "args": ["run", "check:external-urls"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "💨 Smoke test (regression scans)",
+    "command": "bun",
+    "args": ["run", "smoke-test"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus",
+    "hide": "on_success",
+    "save": "all"
+  },
+  {
+    "label": "📊 Lighthouse audit",
+    "command": "bun",
+    "args": ["run", "lighthouse:audit"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "save": "all"
+  },
+  {
+    "label": "🚀 Dev server: astro dev",
+    "command": "bun",
+    "args": ["run", "dev"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never"
+  },
+  {
+    "label": "🚀 Fix Atual: ultracite.py no arquivo aberto (Biome format)",
+    "command": "echo \"{\\\"hook_event_name\\\": \\\"PostToolUse\\\", \\\"tool_name\\\": \\\"Edit\\\", \\\"tool_input\\\": {\\\"file_path\\\": \\\"$ZED_FILE\\\"}}\" | python \"$ZED_WORKTREE_ROOT/.claude/hooks/ultracite.py\"",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "never"
+  },
+  {
+    "label": "✅ Claude: Registrar tarefa manual como concluída (task_completed)",
+    "command": "echo \"{\\\"task_id\\\": \\\"zed_manual_task\\\", \\\"task_subject\\\": \\\"Interação Manual via Zed Editor\\\", \\\"teammate_name\\\": \\\"User\\\"}\" | python \"$ZED_WORKTREE_ROOT/.claude/hooks/task_completed.py\"",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "no_focus"
+  }
+]
