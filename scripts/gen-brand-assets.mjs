@@ -27,12 +27,13 @@ const GOLD = "#d4af37";
 const GOLD_BRAND = "#c2a36a";
 
 const SRC = {
-	wordmark: p("docs/logos/marca-horizontal_Marca-horizontal_Color-05.png"),
-	symbol: p("docs/logos/marca-simbolo_Color-05.png"),
-	photoHero: p("docs/logos/fotos/IMG_5243-Editarcopiar.jpg"),
-	photoStory: p("docs/logos/fotos/IMG_5875-Editarcopiar.jpg"),
-	photoBio: p("docs/logos/fotos/IMG_6380-Editarcopiar2.jpg"),
-	photoCta: p("docs/logos/fotos/IMG_5492-Editarcopiar.jpg"),
+	wordmark: p("docs/identidade-visual/marca-horizontal_Marca-horizontal_Color-05.png"),
+	symbol: p("docs/identidade-visual/marca-simbolo_Color-05.png"),
+	photoHero: p("docs/identidade-visual/fotos/IMG_5243-Editarcopiar.jpg"),
+	photoStory: p("docs/identidade-visual/fotos/IMG_5875-Editarcopiar.jpg"),
+	photoBio: p("docs/identidade-visual/fotos/IMG_6380-Editarcopiar2.jpg"),
+	photoCta: p("docs/identidade-visual/fotos/IMG_5492-Editarcopiar.jpg"),
+	patternNavy: p("docs/identidade-visual/fundos/padronagem_Color-04.png"),
 };
 
 async function ensureDir(file) {
@@ -164,11 +165,21 @@ async function photos() {
 	}
 }
 
+async function patterns() {
+	console.log("Padrões de fundo…");
+	const buf = await sharp(SRC.patternNavy)
+		.resize({ width: 1920 })
+		.webp({ quality: 80 })
+		.toBuffer();
+	await out(p("public/images/brand/pattern-navy.webp"), buf);
+}
+
 async function main() {
 	await wordmark();
 	await favicons();
 	await ogImage();
 	await photos();
+	await patterns();
 	console.log("\nDone.");
 }
 

@@ -30,3 +30,5 @@
 {"timestamp": "2026-06-02T14:17:08Z", "prompt_sha256_12": "3f34d3b75884", "prompt_length": 7, "mode": "routing-hint-only", "recommended_agents": ["frontend-specialist", "librarian", "explorer"]}
 {"timestamp": "2026-06-02T17:46:44Z", "prompt_sha256_12": "94e0f601518d", "prompt_length": 323, "mode": "routing-hint-only", "recommended_agents": ["frontend-specialist", "performance-optimizer", "project-planner", "evaluator", "librarian"]}
 {"timestamp": "2026-06-02T18:29:46Z", "prompt_sha256_12": "0798b5f9ee6a", "prompt_length": 32, "mode": "routing-hint-only", "recommended_agents": ["frontend-specialist", "performance-optimizer", "project-planner", "evaluator", "librarian"]}
+{"timestamp": "2026-06-02T18:35:13Z", "prompt_sha256_12": "42c49d9c2664", "prompt_length": 248, "mode": "routing-hint-only", "recommended_agents": ["debugger", "frontend-specialist", "performance-optimizer", "project-planner", "evaluator"]}
+{"timestamp": "2026-06-02T18:36:26Z", "prompt_sha256_12": "7720f9532d53", "prompt_length": 111, "mode": "routing-hint-only", "recommended_agents": ["debugger", "frontend-specialist", "performance-optimizer", "project-planner", "evaluator"]}
