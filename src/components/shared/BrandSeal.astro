@@ -1,0 +1,35 @@
+---
+interface Props {
+	seal: "saude-estetica" | "hof";
+	/** Rotação lenta contínua (honra prefers-reduced-motion via regra global). */
+	spin?: boolean;
+	/** Tamanho intrínseco em px (width/height, evita CLS). */
+	size?: number;
+	class?: string;
+}
+
+const { seal, spin = false, size = 176, class: className } = Astro.props;
+
+const SEALS = {
+	"saude-estetica": {
+		src: "/images/brand/selo-saude-estetica.webp",
+		alt: "Selo TRINTAE3 — Saúde Estética Avançada",
+	},
+	hof: {
+		src: "/images/brand/selo-hof.webp",
+		alt: "Selo TRINTAE3 — Harmonização Orofacial (HOF)",
+	},
+} as const;
+
+const { src, alt } = SEALS[seal];
+---
+
+<img
+	src={src}
+	alt={alt}
+	width={size}
+	height={size}
+	class:list={["block select-none", spin && "brand-seal-spin", className]}
+	loading="lazy"
+	decoding="async"
+/>

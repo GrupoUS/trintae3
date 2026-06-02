@@ -19,6 +19,7 @@ import PainPoints from "../components/landing/PainPoints.astro";
 import Pillars from "../components/landing/Pillars.astro";
 import PracticePhases from "../components/landing/PracticePhases.astro";
 import { TestimonialCarousel } from "../components/landing/TestimonialCarousel.tsx";
+import SectionDivider from "../components/shared/SectionDivider.astro";
 import Layout from "../layouts/Layout.astro";
 
 const products = await getCollection("products");
@@ -98,6 +99,8 @@ const totalLabel =
 
 		{d.mechanism && <Mechanism mechanism={d.mechanism} />}
 
+		<SectionDivider />
+
 		{d.differentialPillars && (
 			<Differentials differentials={d.differentialPillars} />
 		)}
@@ -105,6 +108,8 @@ const totalLabel =
 		{d.comparison && <Comparison comparison={d.comparison} />}
 
 		{d.audienceList && <AudienceFit audienceList={d.audienceList} />}
+
+		<SectionDivider />
 
 		<Pillars pillars={d.pillars} />
 
@@ -133,6 +138,8 @@ const totalLabel =
 		)}
 
 		{d.bio && <NeonBio bio={d.bio} faculty={d.faculty} />}
+
+		<SectionDivider />
 
 		<Differentials differentials={d.differentials} />
 

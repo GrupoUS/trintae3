@@ -1,6 +1,6 @@
 ---
 import { whatsappUrlBase } from "../../lib/whatsapp";
-import Logo from "../shared/Logo.astro";
+import BrandSymbol from "../shared/BrandSymbol.astro";
 
 const currentYear = new Date().getFullYear();
 
@@ -17,13 +17,25 @@ const legalLinks = [
 ];
 ---
 
-<footer class="border-t border-gold/10 bg-navy" role="contentinfo">
-	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+<footer class="relative overflow-hidden border-t border-gold/10 bg-navy" role="contentinfo">
+	<!-- Símbolo da marca como marca-d'água -->
+	<BrandSymbol
+		class="pointer-events-none absolute -right-16 -bottom-20 h-64 w-64 text-gold/[0.04]"
+	/>
+	<div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
 		<div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
 			<!-- Brand -->
 			<div>
 				<a href="/" class="inline-flex" aria-label="TRINTAE3 — Página inicial">
-					<Logo />
+					<img
+						src="/images/brand/wordmark-vertical.webp"
+						alt="TRINTAE3 — Mentoria e Pós-Graduação"
+						width="640"
+						height="183"
+						class="h-16 w-auto sm:h-20"
+						loading="lazy"
+						decoding="async"
+					/>
 				</a>
 				<p class="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">
 					Pós-Graduação MEC + Mentoria em Saúde Estética Avançada e HOF. Em 6 meses, técnica, posicionamento e negócios com Dra. Sacha Gualberto.

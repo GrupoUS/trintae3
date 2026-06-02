@@ -1,5 +1,6 @@
 ---
 import { whatsappUrlWithText } from "../../lib/whatsapp";
+import BrandSeal from "../shared/BrandSeal.astro";
 import Button from "../shared/Button.astro";
 
 interface Props {
@@ -26,25 +27,23 @@ const helpUrl = whatsappMessage
 			data-reveal="scale"
 		>
 			<div class="grid grid-cols-1 items-center gap-8 md:grid-cols-12">
-				<!-- Selo -->
+				<!-- Selo da marca (gira lento) com contagem de dias no centro -->
 				<div class="md:col-span-4">
-					<div class="relative mx-auto flex h-36 w-36 items-center justify-center rounded-full border-2 border-gold bg-gold/10 text-gold gold-glow md:h-44 md:w-44">
-						<svg
-							class="h-16 w-16"
-							viewBox="0 0 24 24"
-							fill="none"
-							stroke="currentColor"
-							stroke-width="1.5"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							aria-hidden="true"
-						>
-							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-							<path d="m9 12 2 2 4-4" />
-						</svg>
-						<span class="absolute -bottom-3 left-1/2 -translate-x-1/2 rounded-full border border-gold bg-navy px-4 py-1 font-serif text-sm font-bold text-gold">
-							{guarantee.daysCount} dias
-						</span>
+					<div class="relative mx-auto h-40 w-40 md:h-48 md:w-48">
+						<BrandSeal
+							seal="saude-estetica"
+							spin
+							size={192}
+							class="h-full w-full"
+						/>
+						<div class="absolute inset-0 flex flex-col items-center justify-center">
+							<span class="font-serif text-4xl font-bold leading-none text-gold md:text-5xl">
+								{guarantee.daysCount}
+							</span>
+							<span class="mt-1 text-[11px] font-medium uppercase tracking-[0.16em] text-gold-brand">
+								dias
+							</span>
+						</div>
 					</div>
 				</div>
 

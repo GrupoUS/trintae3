@@ -13,8 +13,17 @@ interface Props {
 const { audience, painPoints } = Astro.props;
 ---
 
-<section class="px-4 py-20 sm:px-6 lg:px-8">
-	<div class="mx-auto max-w-7xl">
+<section class="relative overflow-hidden px-4 py-20 sm:px-6 lg:px-8">
+	<!-- Textura starfield (atmosfera, fade nas bordas) -->
+	<img
+		src="/images/brand/texture-starfield.webp"
+		alt=""
+		aria-hidden="true"
+		class="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-screen [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]"
+		loading="lazy"
+		decoding="async"
+	/>
+	<div class="relative z-10 mx-auto max-w-7xl">
 		<SectionHeading
 			title="Para quem é este programa?"
 			subtitle={audience}

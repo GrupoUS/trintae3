@@ -1,0 +1,24 @@
+---
+import { BRAND_SYMBOL_PATH } from "./brandSymbolPath";
+
+interface Props {
+	class?: string;
+	/** Quando fornecido, o símbolo vira informativo (role=img + label); senão é decorativo. */
+	title?: string;
+}
+
+const { class: className, title } = Astro.props;
+---
+
+<svg
+	viewBox="-2 -2 104 104"
+	fill="currentColor"
+	fill-rule="evenodd"
+	class:list={["block", className]}
+	role={title ? "img" : undefined}
+	aria-label={title}
+	aria-hidden={title ? undefined : "true"}
+>
+	{title && <title>{title}</title>}
+	<path d={BRAND_SYMBOL_PATH} />
+</svg>

@@ -221,6 +221,19 @@ body {
 	}
 }
 
+/* Rotação lenta do selo da marca (BrandSeal spin). prefers-reduced-motion já neutralizado globalmente. */
+@keyframes brand-seal-rotate {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.brand-seal-spin {
+	animation: brand-seal-rotate 32s linear infinite;
+	transform-origin: center;
+	will-change: transform;
+}
+
 /* Disable infinite animations on mobile to save GPU */
 @media (max-width: 768px) {
 	.gold-pulse-glow::after {
