@@ -2,109 +2,89 @@
 globs: src/**, astro.config.mjs, src/content.config.ts, .claude/**
 ---
 
-# Astro Invariants (Tier 2 — Auto-loaded, Project-Specific)
+# Astro Invariants — GPUS Astro Landing
 
-> Lightweight overlay marking **non-negotiable Astro invariants** for gpus-site. Framework deep-dive + examples live in `Skill('astro')` → `references/gpus-overlay.md`.
-> Stack: Astro 6 + React 19 (islands) + Tailwind v4 + Bun, **static-only** MPA. Deploy: Railway.
+> Astro overlay portável para landings GPUS. Valores de instância em `.claude/config.json` (`${...}`). Framework deep-dive em `Skill('astro')`.
+> Stack: Astro 6 + React 19 islands (preferir zero) + Tailwind v4 + Bun, static-only MPA, deploy Vercel.
 
----
+## 1. Render-mode invariant
 
-## 1. Render-mode invariant (cardinal #4)
+- Projeto entrega HTML estático via `bun run build` → `dist/` (Vercel).
+- Never add `export const prerender = false`.
+- Never install SSR adapters.
+- Never introduce `ClientRouter` / SPA routing.
 
-- Project ships **static HTML** built by `bun run build`. No SSR adapter installed.
-- **Never** add `export const prerender = false;` to any page.
-- **Never** install an SSR adapter (`@astrojs/node`, `@astrojs/vercel`, `@astrojs/cloudflare`).
-- **Never** introduce client-side routing (`ClientRouter`). Astro is MPA by design; View Transitions are progressive enhancement.
-
-## 2. Hydration directive routing (`client:*`)
+## 2. Hydration directive routing
 
 | Directive | When | Use case |
 |---|---|---|
-| (none) | Always when possible | Static `.astro` markup, zero JS |
-| `client:load` | Above-fold + interactive on first paint | Mobile menu toggle, sticky header dropdown |
-| `client:idle` | Above-fold pure-visual, can wait for idle | Hero animation (per CLAUDE.md routing row "Hero island animation") |
-| `client:visible` | Below-fold interactive | Pricing reveal, FAQ accordion, testimonial slider |
-| `client:media="(min-width: 768px)"` | Only on certain viewport | Desktop-only floating sidebar |
-| `client:only="react"` | Component cannot SSR | Last resort only — third-party widgets with module-top `window` ref |
+| none | default | Static `.astro`, zero JS — **estado atual da página** |
+| `client:load` | só interatividade crítica de primeiro paint | raríssimo; preferir Astro puro + script inline |
+| `client:idle` | island não-crítico above-fold | island decorativo após paint |
+| `client:visible` | below-fold interativo | carousel/reveal que realmente precise de JS |
+| `client:only="react"` | last resort | lib que não SSR por browser API no módulo |
 
-**`client:only` ban exceptions:** Only when component references `window` / `document` at **module-top scope** (not inside `useEffect`). Lifecycle-gated browser APIs **CAN SSR** — use `client:load` / `client:visible` instead.
+Default = sem directive. Astro puro primeiro; **ilha React só quando a interatividade for provada**. (O botão WhatsApp flutuante é Astro puro + script vanilla justamente por isso.)
 
-**Default = no directive.** Pure `.astro` for static; `.tsx` island only when interactivity is proven.
+## 3. Content Collections SSOT
 
-## 3. Content Collections SSOT (cardinal #5)
+- Copy da landing vive em `${content.productJson}`.
+- Schema em `src/content.config.ts` (slug `${content.productSlug}`).
+- Página carrega via `getCollection("products")` + `find(slug === "${content.productSlug}")`.
+- Componentes recebem `.data` (sub-objetos: `hero`, `event`, `audience`, `learn`, `authority`, `nextStep`, `registration`, `faqs`, `finalCta`, `legal`), nunca a entry completa.
+- Adicionar campo = schema + JSON + leitor numa só mudança.
 
-- Copy (products, FAQs, testimonials, team, pricing) lives in `src/content/<collection>/*.{md,mdx,yaml,json}` validated by Zod schema in `src/content.config.ts` (**protected file**).
-- Components read via `getCollection('<name>')` / `getEntry('<name>', '<slug>')`. **Never** inline product / FAQ / testimonial string literals.
-- Schema validation runs in `bunx astro check` (predeploy gate). Type errors block CI.
-- Adding a content field: update schema + content file + reading component **in one commit**.
+## 4. Rotas
 
-## 4. Redirect tri-sync
+Rotas públicas: `/` (landing), `${content.legalRoutes}` (ex.: `/termos`, `/politica-de-privacidade`), `/404` (noindex). Âncoras internas: `${content.anchors}`. Não adicionar rotas/redirects de outros produtos. Mudança de rota/redirect = atualizar `astro.config.mjs` + sitemap + `robots.txt` numa só mudança.
 
-External-product redirects move in **one commit** across three locations:
+## 5. WhatsApp SSOT
 
-1. **`src/content/products/<slug>.json::externalSiteUrl`** — source of truth for destination.
-2. **`astro.config.mjs::redirects`** — slug → destination URL (must match `externalSiteUrl`).
-3. **`astro.config.mjs::integrations.sitemap.filter`** — return `false` for the slug (otherwise sitemap split-indexes slug + destination).
+- Never inline `wa.me/...`.
+- Número/helper: `${lead.whatsappHelper}` (`whatsappUrlWithText`, `whatsappUrlBase`, `WHATSAPP_SDR_E164`).
+- Toda mensagem começa com `${lead.whatsappGreeting}` (enforce em runtime + refine no schema).
+- Texto das mensagens vive nos campos `whatsapp.message` / `whatsappFallback.message` do JSON.
 
-Drift on any one = SEO split-index hazard.
+## 6. Layout contracts
 
-**Don't:** hardcode `Astro.redirect()` or `<meta http-equiv="refresh">` outside `astro.config.mjs::redirects`. The config block is the single source of truth.
+`src/layouts/Layout.astro` owns:
 
-Current redirect slugs: `/na-mesa-certa`, `/trintae3`, `/comunidade-us`, `/neon-dash`. Verify in `astro.config.mjs` before adding.
+- `<html lang="pt-BR">`, `<html class="js">` (inline, progressive enhancement);
+- SEO meta, OG/Twitter, canonical, robots (prop `noindex`);
+- `EducationalOrganization` JSON-LD + payload de página (`jsonLd` prop, array-merge);
+- `Header` + `<main id="conteudo-principal">` + `Footer` + `WhatsAppFloatingButton`;
+- skip link, `<noscript>` reveal fallback, IntersectionObserver reveal hardened;
+- default OG image (`${content.ogImage}`).
 
-## 5. WhatsApp SSOT (cardinal #6)
+Páginas passam `title`, `description`, `ogImage`, `whatsappMessage`, `hasBottomBar`, opcional `canonical`/`breadcrumbs`/`noindex`/`jsonLd`.
 
-- **Never** inline `wa.me/...` URLs.
-- Phone E.164: `src/lib/whatsapp.ts::WHATSAPP_SDR_E164` (single source).
-- URL building: `whatsappUrlWithText()` helper (in `src/lib/whatsapp.ts`, **protected file**).
-- Message text: `cta.whatsappMessage` in `src/content/products/<slug>.json`, always prefixed `Olá, Laura!`.
-- Detail → `Skill('grupo-us')` → `references/whatsapp-ssot.md`.
+## 7. Tailwind v4 `@theme`
 
-## 6. View Transitions (opt-in)
+- Tokens em `src/styles/global.css` `@theme` (Navy/Gold, fonts, escala clamp, motion, depth).
+- Sem hex hardcoded em `.astro`/`.tsx` (exceção: `<meta theme-color>` espelhando `--color-navy`).
+- Token canon: `Skill('gpus-theme')`.
 
-If wired via `<ViewTransitions />` from `astro:transitions` in `src/layouts/*.astro`:
+## 8. Formulário + tracking
 
-- `astro:page-load` listener **must** feature-detect (`if ('startViewTransition' in document)`).
-- Transition CSS must fall back gracefully when API unsupported.
-- `prefers-reduced-motion: reduce` honored (cardinal #8 — no layout-property animation).
+- `${lead.formComponent}`: form nativo acessível; submit POST a `import.meta.env.${lead.endpointEnv}` quando definido, senão fallback WhatsApp. PII → consent LGPD + link privacidade.
+- Tracking GA4/Meta Pixel via env (`${tracking.ga4Env}`, `${tracking.pixelEnv}`) no `Layout.astro`; eventos sem duplicar. IDs/endpoint = aprovação.
 
-## 7. `Layout.astro` contracts
-
-Root layout owns:
-- `<html lang="pt-BR">`
-- `<meta>` block (title, description, OG, Twitter, canonical, JSON-LD Organization + BreadcrumbList)
-- Skip link (first focusable) → `<main id="conteudo-principal" tabindex="-1">`
-- Default OG image fallback (`public/og-default.png`)
-- Preconnect to Google Fonts (Playfair Display + Inter)
-- `<noscript>` reveal fallback for any scroll-reveal opacity/transform islands
-
-Pages override `title` / `description` / `ogImage` via frontmatter — never inline alternative `<meta>` blocks.
-
-## 8. Tailwind v4 `@theme`
-
-- All design tokens live in `src/styles/global.css` `@theme` block.
-- Hex hardcoded outside this block = cardinal violation #7.
-- Token canon (Navy/Gold HSL, semantic map) → `Skill('gpus-theme')`.
-
-## Anti-patterns (Astro)
+## Anti-patterns
 
 | Don't | Why |
 |---|---|
-| `client:only="react"` when component gates `window` only in `useEffect` | Component CAN SSR — `client:load` / `client:visible` instead |
-| `client:load` on hero animation | Use `client:idle` (post-paint) per CLAUDE.md routing |
-| Inline `Astro.redirect("/x")` in page frontmatter | Use `astro.config.mjs::redirects` (single source of truth) |
-| Add redirect without updating sitemap `filter` | SEO split-index |
-| `view-transition` listener without feature detection | Breaks browsers without API |
-| Heavy lib (`motion`, `lucide-react`) imported in `Layout.astro` | Loads on every page → blow initial JS 50KB budget |
-| Hardcoded copy in `*.astro` instead of `getCollection()` | Cardinal #5 violation; bypasses Zod schema |
-| `export const prerender = false` | Cardinal #4 violation (static-only) |
+| `client:only="react"` sem browser API no módulo | JS/client-only desnecessário |
+| `client:load` para island decorativo | rouba main-thread budget |
+| copy da aula hardcoded em componente | fura o SSOT de conteúdo |
+| `prerender = false` | quebra contrato estático |
+| `<ClientRouter />` | SPA banido |
+| `wa.me` hardcoded fora do helper | fura WhatsApp SSOT |
+| hex fora de `global.css @theme` | fura token canon |
+| `site`/redirect/sitemap dessincronizados | SEO split / canonical errado |
 
 ## Pointers
 
-- Framework deep-dive + examples + escape hatches → `Skill('astro')` (+ `references/gpus-overlay.md`).
-- Token / theme syntax (`@theme`, Navy/Gold canon) → `Skill('gpus-theme')`.
-- Brand voice / WhatsApp Laura SSOT → `Skill('grupo-us')`.
-- Universal frontend rules → `.claude/rules/frontend.md`.
-- Universal stability + smoke → `.claude/rules/stability.md`.
-- SEO + sitemap config → `.claude/rules/seo.md`.
-- Cardinal rules + routing matrix → `.claude/CLAUDE.md`.
+- Astro framework: `Skill('astro')`.
+- Copy/funil/voz: `Skill('grupo-us')`.
+- Theme/tokens: `Skill('gpus-theme')`.
+- Cardinal rules: `.claude/CLAUDE.md`.

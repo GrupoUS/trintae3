@@ -1,64 +1,152 @@
-# Product
+# Product — GPUS
+
+> **Brief de produto, posicionamento e conversão da casa — Grupo US / Dra. Sacha Gualberto.** Genérico para **todos os produtos GPUS**, usável em qualquer projeto/landing.
+>
+> **Load:** `Skill('grupo-us')` (voz, IDs de produto/pessoa, funil drasacha) + `Skill('gpus-theme')` (tokens Navy/Gold). Visual/interação em `DESIGN.md`. Este arquivo **aponta** para as skills — não duplica voz, IDs nem tokens.
+>
+> O **slot por projeto** fica em `## Register` + `## Por projeto`. As demais seções são **verdade GPUS compartilhada** (valem em todo projeto).
+>
+> Síntese de pesquisa: `docs/logos/landing-pages-design-conversao-2026-06-01.md`.
+
+---
 
 ## Register
 
-product — site institucional Grupo US (`https://grupous.com.br`).
+> **Slot por projeto** — cada landing preenche este bloco. (Exemplo de campos; substituir pelos valores reais do projeto.)
+
+- **Product:** `<nome do produto>` (ex.: Aula Gratuita TRINTAE3, TRINTAE3, OTB, Comunidade US…).
+- **Canonical URL:** `<https://…>`.
+- **Estágio de funil:** `<entrada | aula gratuita | especialista | networking | escala | apex>`.
+- **Content SSOT:** `src/content/products/<slug>.json` (validado em `src/content.config.ts`).
+- **CTA primário:** `<texto do CTA>` (um por página, repetido com consistência).
+- **WhatsApp:** mensagem em `cta.whatsappMessage` (prefixo obrigatório `Olá, Laura!`), via helper `src/lib/whatsapp.ts`. Nunca inline `wa.me/...`.
+
+---
 
 ## Users
 
-Profissionais da saúde estética avançada — enfermeiras, biomédicas, farmacêuticas, fisioterapeutas — chegando ao site via tráfego pago, orgânico ou indicação. Dois perfis predominantes:
+Público compartilhado GPUS: **profissionais habilitados de Saúde Estética Avançada** que operam ou desejam operar em alto padrão clínico e empresarial:
 
-1. **Entrada** — pesquisa um curso técnico (Aurículo) ou comunidade de educação contínua (Comunidade US). Quer entender quem é o Grupo US antes de comprar o primeiro produto.
-2. **Escala** — já é especialista, busca rota de crescimento (TRINTAE3 → Black NEON → OTB). Avalia autoridade institucional, mentoras e prova social antes de entrar em funil de mentoria.
+- enfermeiros;
+- biomédicos;
+- farmacêuticos;
+- fisioterapeutas;
+- odontólogos;
+- médicos.
 
-Em ambos os casos, o site não vende sozinho. Vende a marca, captura sinal de intenção e despacha o lead para o funil correto (`drasacha.com.br`, subdomínios de produto, WhatsApp da SDR Laura). Comportamento: leitura rápida em mobile (mais comum), aprofundamento em desktop quando há decisão de compra próxima.
+Chegam por tráfego pago, indicação, lista de relacionamento ou canais do Grupo US. A decisão costuma **começar no mobile** e aprofundar no desktop quando a compra está próxima.
 
-## Product Purpose
+**Jornada do aluno (ecossistema):** entrada (Comunidade US / cursos curtos / **aula gratuita**) → **TRINTAE3** (especialista: técnica + base de negócio) → **Na Mesa Certa** (networking) → **Mentoria Black NEON** (escala) → **OTB** (apex internacional). IDs oficiais de produto/pessoa e a jornada completa vivem em `Skill('grupo-us')` — referenciar, não copiar. Cada landing **declara seu estágio** em `## Register`.
 
-`grupous.com.br` é a **vitrine institucional** do ecossistema Grupo US. Substitui um conjunto disperso de LPs por uma porta de entrada única, em PT-BR, com hierarquia clara: identidade da marca → grade de produtos → jornada → autoridade da Dra. Sacha Gualberto e do time → CTAs alinhados aos canais oficiais.
-
-Sucesso operacional: a aluna potencial sai do home sabendo (a) o que o Grupo US faz, (b) qual produto encaixa na fase dela, (c) por onde continuar (LP específica, WhatsApp ou comunidade). O site **não roda** funil de checkout próprio; ele empurra para os hubs externos (`drasacha.com.br`, `namesa.gpus.com.br`, `neondash.com.br`, `trintae3.gpus.com.br`).
-
-Mapa de produtos e rotas — fonte da verdade em [`astro.config.mjs`](astro.config.mjs) (redirects) + [`src/content/products/`](src/content/products) (JSON com `externalSiteUrl` e `cta.url`). Detalhe institucional, IDs e jornada → `.claude/skills/grupo-us/references/manual-resumo.md`.
+---
 
 ## Brand Personality
 
-Tom de voz **acolhedor, claro, consultivo**. Fala em "nós" — convite à comunidade, não pitch de vendedor. Três frases-âncora do manual Grupo US: "Nós iluminamos", "Clareza é a nova gentileza", "Olhar de dono". Identidade visual obedece o sistema **Azul Petróleo + Sovereign Gold** canonizado em `.claude/skills/gpus-theme`. Acolhedor não é pastel; é hierarquia legível, copy que respeita a leitora, e ouro raro marcando momento de decisão.
+Tom de voz: **premium, claro, consultivo e internacional**. Falar em **"nós"**.
 
-Definições detalhadas (missão, visão, valores inegociáveis, fundadora, equipe) ficam em `.claude/skills/grupo-us/references/manual-resumo.md` — este PRODUCT.md não duplica.
+- Autoridade sem arrogância.
+- Sofisticação com presença (não timidez, não excesso).
+- Clareza antes de hype — "clareza é a nova gentileza".
+- Business e segurança clínica caminham juntos.
+- Grupo US é a marca-mãe; a narrativa principal é o produto da página.
+
+Voz canônica, valores (A.C.T.I.V.A.) e frases-guia vivem em `Skill('grupo-us')`.
+
+---
+
+## Conversion playbook
+
+Arquitetura ideal de landing high-ticket GPUS (ordem por jornada):
+
+1. **Hero** — promessa específica + público + mecanismo + CTA + microprova.
+2. **Barra de confiança/qualificação** — números, selos, horas, turmas; filtro de público explícito no topo ("para quem é").
+3. **Dor qualificada** — 3–4 dores específicas do profissional.
+4. **Mecanismo proprietário** — por que funciona e por que é diferente (fórmula simples por produto).
+5. **Jornada / como funciona** — timeline ou passos claros.
+6. **Prova** — depoimentos, fotos reais, bastidores, prints autorizados.
+7. **Oferta** — o que recebe (essencial / acompanhamento / bônus).
+8. **Comparativo** — "sem método vs com método GPUS".
+9. **Autoridade** — Dra. Sacha, mentores, parceiros, credenciais.
+10. **Investimento / condições** — com clareza e redução de risco.
+11. **FAQ por objeção** — preço, tempo, elegibilidade, prática, certificado, suporte.
+12. **CTA final + WhatsApp contextual.**
+
+**Fórmula de hero** — todo hero responde, em ≤5s: *para quem é? · que transformação entrega? · qual mecanismo torna diferente? · qual próximo passo? · por que confiar agora?*
+
+**Mecanismo proprietário (padrão):** `Componente A + Componente B + Componente C = Resultado de autoridade`. Cada produto define a sua fórmula simples.
+
+**Disciplina de CTA:**
+- **um CTA primário por página**, repetido com consistência (não deixar cada seção inventar um CTA);
+- **WhatsApp = secundário/objeção**, com mensagens por intenção ("sou elegível?", "condições de pagamento", "próxima turma");
+- prova social **perto do CTA**: 3 estatísticas verificáveis + 1 depoimento curto (foto/profissão/cidade) + selos com nota.
+
+**Mobile-first:** sticky CTA bar (inscrever + WhatsApp), header compacto com logo legível, seções longas em tabs/accordion, formulário curto, **estado de sucesso rico** (confirmação + lembrete WhatsApp + add-to-calendar).
+
+> Como esses padrões se parecem e se movem → `DESIGN.md § Component catalog` + `§ Motion`.
+
+---
+
+## Guardrails
+
+Ofertas envolvem saúde estética, harmonização e formação profissional regulada → linguagem segura, sempre:
+
+- **Sem promessa clínica garantida.** Sem promessa financeira absoluta ("fature X em Y meses" como headline).
+- **Público elegível claro** conforme legislação e conselho aplicável.
+- **Separar resultado de aluno de promessa universal** — depoimento ≠ garantia de reprodução.
+- **Prova social com contexto:** nome, profissão, cidade, situação inicial, evolução.
+- **Claims sensíveis** — "única", "reconhecida pelos Conselhos", "MEC", "Harvard", "ASA" — só com documentação / nota legal adequada. Referências internacionais (Harvard, Boston) como **contexto geográfico/acadêmico**, nunca como certificação oficial.
+- **Copy não confirmada = PROPOSTA.** Datas/valores não confirmados = placeholder explícito.
+
+---
 
 ## Anti-references
 
-Quatro rejection gates herdados da doutrina GPUS. Se uma página cai em qualquer um, **redesenhar antes do merge**:
+Evitar:
 
-1. **Template SaaS genérico** (Vercel, Stripe, Linear boilerplate): hero 50/50, gradient text, glassmorphism decorativo, hero-metric template, grid de cards idênticos. Falha imediato no AI slop test.
-2. **ERP médico ou clínico cinza+azul corporativo**: tabelas densas sem hierarquia, ícones Material padrão, ausência de identidade. Estilo RD Station / Conexa.
-3. **Dashboard crypto ou fintech neon-on-black**: charts saturados, glows decorativos, escuro gratuito, categoria saturada.
-4. **App consumer rosado ou lifestyle estético** (Glossier-lite, clinic-pink): pastel feminina genérica. Quebra autoridade GPUS e confunde o público (educação técnica, não tratamento).
+- template SaaS genérico;
+- estética de dashboard corporativo frio;
+- excesso neon/crypto/fintech;
+- estética pastel/lifestyle genérica;
+- promessa médica sensacionalista;
+- tom e visual agressivo de infoproduto (CTA laranja/vermelho, urgência exagerada, dor por culpa/medo);
+- uso de endosso/certificação oficial sem base;
+- logos/parceiros sem autorização ou contexto.
 
-Lista canônica + matriz Do/Don't completa em [`.claude/rules/DESIGN.md`](.claude/rules/DESIGN.md) e `gpus-theme/references/design-taste.md`.
+---
 
-## Design Principles
+## CRO
 
-Cinco princípios, adaptados ao contexto de **landing institucional** (não dashboard operacional):
+**Eventos de analytics (instrumentar por página):** `click_cta_hero`, `click_cta_sticky_mobile`, `click_whatsapp_hero`, `click_whatsapp_investimento`, `form_start`, `form_submit_success`, `form_submit_error`, `faq_open`, `section_view_*`, `scroll_25/50/75/90`.
 
-1. **Curadoria acima de impressão.** Cada seção serve a decisão da leitora, não a primeira foto do portfólio. Métricas e prova social mostram autoridade, não vaidade.
-2. **Acolhedor sem ser brando.** Copy consultiva e cordial; estrutura visual firme. O tom respeita, a hierarquia comanda.
-3. **Densidade com hierarquia.** Páginas de produto carregam informação (pilares, entregáveis, FAQ, bônus, depoimentos). Resolver com tipografia, ritmo de espaçamento e tonal layering — nunca com cards aninhados ou bordas coloridas.
-4. **Mobile é mídia de descoberta.** A maioria do tráfego pago entra em mobile. Um único scroll owner por página, alvos 44px+, hero legível sob luz forte.
-5. **Anti-template férreo.** Os quatro anti-refs acima são gates, não sugestões. Hero centrado padrão, three-up de cards equal-width, gradient text — banidos. Reescrever ou redesenhar.
+**Prioridades de A/B:** CTA (consultivo vs direto) · hero visual (textual vs foto/vídeo vs card+depoimento) · formulário (campos curtos vs completos) · prova acima da dobra (com vs sem).
+
+**Métricas por página:** CTR de CTA/WhatsApp, leads qualificados, custo por lead, scroll até investimento/FAQ, conversão pós-prova/garantia.
+
+> IDs de tracking (GA4/Pixel) e endpoint vivem em **env**, nunca commitados — ver `.claude/rules/seo.md` + `.claude/config.json`. Mudá-los = aprovação.
+
+---
 
 ## Accessibility & Inclusion
 
-WCAG 2.2 AA em todos os pares de contraste. Em particular:
+- WCAG 2.2 AA em contrastes.
+- Foco visível em todo elemento interativo.
+- `prefers-reduced-motion` respeitado.
+- Sem cor como único portador de significado.
+- Sem texto crítico apenas em ícone.
+- Alvos táteis ≥ 44 × 44px.
 
-- **Ouro escuro `#AC9469` sobre branco** falha (2.97:1). Texto-em-ouro no light usa `#8B6914` (5.2:1). Botão em fundo dourado usa texto escuro (`#0D1C2D` ou `#1a1207`), nunca branco. Fonte canônica: `gpus-theme/references/design-foundation.md §2.5`.
-- **`prefers-reduced-motion`** respeitado em toda animação. Animação decorativa é opcional, nunca estrutural.
-- **Foco visível** sempre — ring 3px da cor de focus token, nunca `outline: none` sem replacement.
-- **Alvos táteis** ≥ 44 × 44px em mobile (utilitário `touch-target`).
-- **Sem texto crítico só em ícone**, sem cor como único portador de significado, sem áudio essencial.
+---
 
-Regras universais (skip link, semantic landmarks, FAQ via `<details>` ou grid `0fr↔1fr`) em [`.claude/rules/frontend.md`](.claude/rules/frontend.md) e [`.claude/rules/DESIGN.md`](.claude/rules/DESIGN.md).
+## Por projeto
+
+> Checklist de fatos a confirmar antes de publicar (preencher no projeto):
+
+- [ ] Credenciais (MEC, conselho) verificadas ou marcadas como "a confirmar".
+- [ ] Duração / datas / valores com fonte; divergências entre manual e site sinalizadas.
+- [ ] Claims atribuídos a herança de marca, não a certificação fabricada.
+- [ ] Contato (SDR Laura / WhatsApp) bate com `.claude/config.json` + `Skill('grupo-us')`.
+- [ ] Oferta/inclusões com "confirmar oficialmente" onde não houver fonte.
+- [ ] CTA primário único definido; mensagens WhatsApp por intenção no JSON.
 
 ---
 
@@ -66,10 +154,11 @@ Regras universais (skip link, semantic landmarks, FAQ via `<details>` ou grid `0
 
 | Pergunta | Fonte |
 |---|---|
-| Voz de marca, missão, valores, jornada do aluno, IDs de produto | `.claude/skills/grupo-us/references/manual-resumo.md` |
-| Tokens HSL Navy/Gold, contrast safety, depth model, typography hierarchy | `.claude/skills/gpus-theme/SKILL.md` + `references/design-foundation.md` |
-| Regras universais de design (cor, tipo, motion, depth, focus) | `.claude/rules/DESIGN.md` |
-| Slugs, rotas e redirects do site institucional | `.claude/skills/grupo-us/references/produtos-e-rotas.md` + [`astro.config.mjs`](astro.config.mjs) |
-| WhatsApp SDR Laura (E.164 SSOT) | `.claude/skills/grupo-us/references/whatsapp-ssot.md` |
-| Resumo design + matriz Do/Don't específica deste repo | [`DESIGN.md`](DESIGN.md) |
-| Stack, comandos, estrutura de pastas, deploy | [`README.md`](README.md) |
+| Copy, público, CTA, voz, funil, IDs | `Skill('grupo-us')` |
+| Tokens visuais Navy/Gold | `Skill('gpus-theme')` |
+| Como parece / se move (visual, componentes, motion) | `DESIGN.md` |
+| Regras universais de design (qualquer stack) | `.claude/rules/DESIGN.md` |
+| Astro / Content Collections / static | `.claude/rules/astro.md` + `Skill('astro')` |
+| SEO / tracking / env | `.claude/rules/seo.md` + `.claude/config.json` |
+| Conteúdo/copy do produto | `src/content/products/<slug>.json` |
+| Pesquisa de conversão (fonte) | `docs/logos/landing-pages-design-conversao-2026-06-01.md` |

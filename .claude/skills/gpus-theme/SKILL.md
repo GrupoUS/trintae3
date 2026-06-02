@@ -1,23 +1,21 @@
 ---
 name: gpus-theme
-description: Use when applying GPUS branding (Portal Grupo US) to other projects, setting up shadcn/ui with Navy/Gold palette, or copying the complete light/dark theme configuration. Includes CSS variables, Tailwind v4 theme, and shadcn configuration. Project canon resolves from references/values/<project>-canon.md.
+description: Use when applying GPUS branding (Portal Grupo US) to other projects, setting up shadcn/ui with Navy/Gold palette, or copying the complete light/dark theme configuration. Includes CSS variables, Tailwind v4 theme, and shadcn configuration. Also covers per-product palette variants (darker/lighter, adjacent metallics/blues) that differentiate a landing while keeping the brand DNA.
 ---
 
 # GPUS Theme
 
 Portable design system from the Portal Grupo US project featuring a Navy/Gold color palette with complete light and dark theme support.
 
-> **Identity:** Navy backgrounds + Gold accents. Professional, premium, educational.
-> **Project canon:** `references/values/gpus-canon.md` (HSL palette, typography, custom utilities).
-> **Schema for new projects:** `references/template.md` (theme canon section structure).
+> **Identity:** Navy backgrounds + Gold accents. Professional, premium, educational. — **premium COM PROFUNDIDADE**: sombras em camadas, glow gold em tiers, glass e 3D sutil dão dimensão à superfície. (Reenquadrado de "flat/minimal"; profundidade e dinamismo são on-brand.)
 
-## Institutional site (`gpus-site`) vs portable theme
+## Institutional site (`gpus` repo) vs portable theme
 
-Portable assets in this skill support **light and dark** (see palette table in `references/values/gpus-canon.md`). The **Grupo US Astro institutional site** in this repository uses **dark navy / gold only** per root `AGENTS.md` — **no light/dark product toggle** unless product scope changes.
+Portable assets in this skill support **light and dark** (see palette table and toggle tips below). The **Grupo US Astro institutional site** in this repository uses **dark navy / gold only** per root `AGENTS.md` — **no light/dark product toggle** unless product scope changes.
 
 When editing **that** site:
 
-- Use `<themeSsot>` `@theme` block + project tokens — path from `config.json::cardinals.themeSsot` (currently `src/styles/global.css`). Tokens: `navy`, `gold`, semantic `bg-background`, etc.
+- Use `src/styles/global.css` `@theme` and project tokens (`navy`, `gold`, semantic `bg-background`, etc.).
 - Treat **Dark Mode Toggle** and **View Transition API** theme-toggle notes below as **for other consumers** of `theme-tokens.css`, not as defaults for the institutional build.
 
 ---
@@ -38,7 +36,7 @@ Copy `assets/theme-tokens.css` to your project's main CSS file.
 Copy `assets/components.json` to your project root:
 
 ```bash
-cp .claude/skills/gpus-theme/assets/components.json ./components.json
+cp .agent/skills/gpus-theme/assets/components.json ./components.json
 ```
 
 ### Option 3: Tailwind v3 Config
@@ -46,7 +44,7 @@ cp .claude/skills/gpus-theme/assets/components.json ./components.json
 Import theme tokens into `tailwind.config.ts`:
 
 ```typescript
-import { gpusTheme } from "./.claude/skills/gpus-theme/assets/tailwind-theme";
+import { gpusTheme } from "./.agent/skills/gpus-theme/assets/tailwind-theme";
 
 export default {
   theme: {
@@ -59,7 +57,7 @@ export default {
 
 ---
 
-## Theme Overview (gpus-canon values)
+## Theme Overview
 
 ### Color Palette
 
@@ -71,7 +69,7 @@ export default {
 | **accent**      | Light gold `38 60% 95%` | Muted `26 5% 27%`  | Highlights      |
 | **destructive** | Red `0 84% 60%`         | Red `0 84% 60%`    | Errors          |
 
-Full token table → `references/values/gpus-canon.md`.
+> **Variar por produto (referência, não cópia).** Navy/Gold é o canon; cada produto/landing pode usar uma **variante adjacente** (mais escura/clara, ou metálico/azul vizinho) para não ficar tudo igual, mantendo o DNA (azul-escuro + metálico quente). Cardápio pronto + como aplicar → `references/palette-variants.md`. O site institucional `gpus` permanece Navy/Gold canônico.
 
 ### Border Radius
 
@@ -80,12 +78,46 @@ Full token table → `references/values/gpus-canon.md`.
 
 ### Custom Utilities
 
-| Class             | Effect                          |
-| ----------------- | ------------------------------- |
-| `.bg-mesh`        | Radial gradient mesh background |
-| `.glass-card`     | Glassmorphism with blur         |
-| `.bg-noise`       | Subtle noise texture overlay    |
-| `.animate-ripple` | Button ripple animation         |
+| Class                  | Effect                                            |
+| ---------------------- | ------------------------------------------------- |
+| `.bg-mesh`             | Radial gradient mesh background                   |
+| `.glass-card`          | Glassmorphism with blur                           |
+| `.bg-noise`            | Subtle noise texture overlay                      |
+| `.animate-ripple`      | Button ripple animation                           |
+| `.bg-mesh-animated`    | Gradiente mesh em drift                           |
+| `.elevation-1..4`      | Tiers de sombra em camadas (ambient + key)        |
+| `.glow-gold` / `.glow-gold-strong` | Glow brand em tiers                   |
+| `.glow-focus`          | Focus ring com glow                               |
+| `.tilt-3d`             | Tilt perspective no hover, reduced-motion safe    |
+| `.parallax-layer`      | Camada de parallax (will-change: transform)       |
+| `.mouse-glow`          | Spotlight de pointer, island-driven               |
+| `.animate-float`       | Float contínuo (eixo Y)                           |
+
+> Novas — direção premium-com-profundidade / dinâmico forte. Reduced-motion: efeitos contínuos/pointer congelam ou ficam estáticos.
+
+---
+
+## Depth, Glow & 3D token vocabulary
+
+Vocabulário de tokens para a direção premium-com-profundidade / dinâmico forte:
+
+**Elevation**
+- `--shadow-elevation-1..4` — sombras de 2 camadas (ambient + key), tiers crescentes.
+- `--shadow-glass` — sombra externa suave + inner highlight para glass.
+
+**Glow**
+- `--glow-gold-sm` / `-md` / `-lg` / `-strong` — glow brand gold em tiers.
+- `--glow-focus` — focus ring com glow (contraste AA preservado).
+
+**3D**
+- `--perspective-card` — perspective base para tilt de cards.
+- `--tilt-max-deg` — ângulo máximo de tilt.
+
+**Motion**
+- `--gradient-mesh-shift-duration` — duração do drift do mesh animado.
+- `--float-distance` / `--float-duration` — distância e duração do float.
+
+> Definidos em `theme-tokens.css` `:root` / `.dark`, expostos via `@theme` espelhando o mapping `--color-*` (Cardinal 7 fortalecido — sem shadow/hex inline).
 
 ---
 
@@ -96,7 +128,7 @@ Full token table → `references/values/gpus-canon.md`.
 - **Style:** `new-york`
 - **Base color:** `zinc`
 - **CSS Variables:** Enabled
-- **Icon Library:** `config.json::cardinals.iconLibrary` (currently `lucide-react`)
+- **Icon Library:** `lucide`
 
 ### Extended Registries
 
@@ -115,16 +147,14 @@ Full token table → `references/values/gpus-canon.md`.
 
 ## Files Reference
 
-| File                                       | Purpose                              | Scope |
-| ------------------------------------------ | ------------------------------------ | ----- |
-| `references/template.md`                   | Section schema for any project canon | TEMPLATE — never edit per project |
-| `references/values/gpus-canon.md`          | gpus-site HSL palette + utilities    | VALUES — gpus-site |
-| `references/shadcn-config.md`              | shadcn/ui configuration details      | GENERIC mechanic |
-| `assets/theme-tokens.css`                  | Portable CSS file (gpus-canon)       | VALUES — fork per project if palette differs |
-| `assets/tailwind-theme.ts`                 | Tailwind v3 config export            | GENERIC mechanic |
-| `assets/components.json`                   | shadcn configuration                 | GENERIC mechanic |
-
-For a new Grupo US project with a different palette, fork `references/values/<new-project>-canon.md` from `template.md`.
+| File                          | Purpose                         |
+| ----------------------------- | ------------------------------- |
+| `references/css-variables.md` | Complete CSS variable reference |
+| `references/palette-variants.md` | Variantes de paleta por produto (mais escuro/claro, metálicos/azuis adjacentes) |
+| `references/shadcn-config.md` | shadcn/ui configuration details |
+| `assets/theme-tokens.css`     | Portable CSS file               |
+| `assets/tailwind-theme.ts`    | Tailwind v3 config export       |
+| `assets/components.json`      | shadcn configuration            |
 
 ---
 
@@ -152,15 +182,4 @@ body {
 
 ### View Transition API (portable / other projects)
 
-For animated theme toggle when using portable tokens, use the View Transition API selectors in `theme-tokens.css`. **Not applicable** to the institutional gpus-site while it remains single-theme per `AGENTS.md`.
-
----
-
-## When to load more
-
-- Schema for a new project's theme canon: `references/template.md`
-- Concrete canon (gpus-site): `references/values/gpus-canon.md`
-- shadcn methodology: `references/shadcn-config.md`
-- Tailwind v4 syntax + `@theme`: `Skill('${skills.stack}')` → `references/styling-tailwind.md`
-- Universal design rules: `.claude/rules/DESIGN.md`
-- Bootstrap new project: `.claude/scaffolding/BOOTSTRAP.md`
+For animated theme toggle when using portable tokens, use the View Transition API selectors in `theme-tokens.css`. **Not applicable** to the institutional `gpus` site while it remains single-theme per `AGENTS.md`.

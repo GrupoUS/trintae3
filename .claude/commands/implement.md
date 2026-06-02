@@ -1,284 +1,55 @@
 ---
-description: Execute implementation plans. Parses plan for phase structure + agent assignments, loads domain skills, spawns specialists, orchestrates parallel/sequential execution with sprint contract gates.
-workflow_type: orchestrator-workers
+description: Execute an approved GPUS Astro landing plan with focused code changes and validation.
 ---
 
-# /implement
+# /implement — ${project.displayName} Plan Execution
 
 **ARGUMENTS**: $ARGUMENTS
 
-> **Plans come from:** `Skill("superpowers:writing-plans")` (canonical format, written to `docs/superpowers/plans/`) chained with `Skill("planning")` for NeonDash layer-map.
-> **Plan files:** `docs/superpowers/plans/YYYY-MM-DD-<feature>-plan.md` (per `_shared.md` § 0.7) or active conversation context. Legacy `docs/plans/*.md` accepted for back-compat.
-
----
+Use to execute an approved plan or a clearly scoped implementation request.
 
 ## 0. Pre-flight
 
-```typescript
-Skill("superpowers:using-superpowers");   // meta — bootstrap (per _shared.md § 0.5)
-```
-
-Use the file-search tool to locate `docs/superpowers/plans/*.md` (preferred) and `docs/plans/*.md` (legacy). Do not rely on shell globbing or stderr redirection for this check.
-
-| Source | Action |
-|---|---|
-| Plan file exists | `Skill("superpowers:executing-plans")` — parse phases + TodoWrite seed |
-| Plan in chat context | `Skill("superpowers:executing-plans")` — extract phases + tasks from conversation |
-| No plan found | `Skill("superpowers:writing-plans")` → `Skill("planning")` — write plan to `docs/superpowers/plans/`. Never implement without a plan. |
-
-Parse from plan: **Complexity**, **Layers**, phase markers (`[SEQUENTIAL]` / `[PARALLEL]`), task list (`- [ ]`), verify commands, sprint contracts, `[ASSUMED]` items to validate before starting.
-
-For L4+ work (multi-domain or multi-file changes), invoke `Skill("superpowers:using-git-worktrees")` to isolate the workspace before any agent spawns. Skip for L1-L3 trivial work.
-
-Read `.claude/config.json` for tooling + paths. If `.claude/rules/routing-supplements.md` exists, also read it for project-specific layer/agent routing.
-
-**Flags:**
-
-| Flag | Effect |
-|---|---|
-| `--codex` | Delegate L5+ phases to `codex:rescue` skill |
-| `--sprint=N` | Execute only sprint N of multi-sprint plan |
-| `--dry-run` | Parse + display task/agent assignments without executing |
-
----
-
-## 1. Skill routing
-
-Per `_shared.md` § 6 (Skill-to-Domain Matrix), load the skill matching the task domain **before spawning any agent for that phase**.
-
-If the plan touches:
-- Schema / migrations / data → load `debugger` skill and any host database skill listed in `${rulesDir}/routing-supplements.md`
-- API / handlers / services → `debugger`
-- React / components / styling → `gpus-theme` or host design-system skill
-- Performance / SEO → `performance-optimization`
-- Spreadsheets / data files → `xlsx`
-- Skill creation / iteration → `skill-creator`
-- External provider/deployment/product API → host provider skill if configured; otherwise use `librarian` for docs
-
-Multiple skills may load. Process skills (`planning`, `debugger`) before implementation skills.
-
----
-
-## 2. Agent assignment
-
-If plan doesn't specify `**Agent:**`, assign by file-path detection:
-
-| File-path pattern | Agent |
-|---|---|
-| `${paths.schemaRoot}/**` | `debugger` |
-| `${paths.backendRoot}/**` | `debugger` |
-| `${paths.frontendRoot}/**` (UI files) | `frontend-specialist` |
-| `${paths.frontendRoot}/**` (logic / hooks / non-UI) | `debugger` |
-| Cross-domain (3+ layers) | `project-planner` as coordinator |
-| Any failing task | `debugger` |
-
-If `.claude/rules/routing-supplements.md` extends this table → respect those bindings.
-
-Background read-only agents (always `run_in_background: true`):
-
-| When | Agent |
-|---|---|
-| Before any phase — grep existing patterns | `explorer` |
-| External API docs, package versions | `librarian` |
-
----
-
-## 3. Execution mode (per `_shared.md` § 2)
-
-| Complexity | Mode |
-|---|---|
-| L1-L2 | DIRECT — main agent executes |
-| L3-L5 | SUBAGENTS — `Agent()` per task/phase |
-| L6+ | COORDINATED — coordinator + specialists; use Agent Team tools only when the runtime exposes them |
-
----
-
-## 4. Mode A — DIRECT (L1-L2)
-
-1. Load skill for the task domain
-2. Execute task directly in main agent
-3. Run verify command
-4. Gate per `_shared.md` § 1 (type-check)
-
----
-
-## 5. Mode B — SUBAGENTS (L3-L5)
-
-Method-layer skill load (single message at the top of Mode B):
+1. Confirm branch is `main`.
+2. Read `.claude/config.json` for package manager and paths.
+3. Load relevant skills:
 
 ```typescript
-Skill("superpowers:subagent-driven-development");  // two-stage review (spec → quality), commit per task
-Skill("superpowers:dispatching-parallel-agents");  // distinct scope + shared return contract
+Skill("planning"); // when executing a plan
+Skill("astro");
+Skill("grupo-us");
+Skill("gpus-theme"); // if UI/styling is touched
 ```
 
-### Before any phase
+## 1. Execution rules
 
-Spawn `explorer` in background to grep existing patterns relevant to this phase:
+- Touch only files required by the plan.
+- Keep product copy in `${content.productJson}` unless it is UI chrome.
+- Keep WhatsApp behavior centralized in `src/lib/whatsapp.ts`; messages start with `${lead.whatsappGreeting}`.
+- Keep lead destination + tracking IDs in env (`DATABASE_URL`/`LEAD_WEBHOOK_URL`/`${lead.endpointEnv}`, `${tracking.ga4Env}`, `${tracking.pixelEnv}`); never hardcode or commit them.
+- Keep Astro static: no SSR adapter, no `ClientRouter`, no `prerender = false`.
+- Use Bun only.
+- Do not add dependencies without explicit approval.
+- Do not commit, push, open PRs, or deploy unless explicitly requested.
 
-```typescript
-Agent({
-  subagent_type: "explorer",
-  prompt: "Grep [domain] patterns in [paths]. Report file:line for reuse.",
-  run_in_background: true
-});
-```
+## 2. Decomposition
 
-### Sequential phase
-
-Per `_shared.md` § 8 (Sequential Phase Gating).
-
-**Hard TDD gate (L3+):** Before each task that writes code, invoke `Skill("superpowers:test-driven-development")`. The skill requires a failing test before the implementation lands. L1-L2 trivial tasks (single-line fix, exact existing pattern) are exempt — note the exemption in the task log.
-
-```
-Load domain skill
-→ Skill("superpowers:test-driven-development") gate → write failing test → wait → spawn agent for task 1 → wait → run verify command → Skill("superpowers:verification-before-completion") evidence → gate
-→ Skill("superpowers:test-driven-development") gate → write failing test → wait → spawn agent for task 2 → wait → run verify command → Skill("superpowers:verification-before-completion") evidence → gate
-→ ...
-```
-
-### Parallel phase
-
-Per `_shared.md` § 7 (Parallel Agent Spawn). Spawn all independent tasks in **single message**:
-
-```typescript
-// Write-capable → foreground:
-Agent({ subagent_type: "frontend-specialist", prompt: "..." })
-Agent({ subagent_type: "debugger", prompt: "..." })
-// Read-only → background:
-Agent({ subagent_type: "explorer", prompt: "...", run_in_background: true })
-```
-
-After all complete: parse each agent's `## Context Handoff` block, consolidate changes, run phase gate, then invoke `Skill("superpowers:verification-before-completion")` to capture the gate output as evidence before marking the phase complete.
-
-### Sprint contract gate
-
-If plan includes sprint contracts, after all tasks in a sprint:
-
-1. Run each `verify:` command listed in the contract's Done Definition
-2. All must pass — no partial credit
-3. Any failure → fix + re-run before next sprint
-
----
-
-## 6. Mode C — COORDINATED (L6+)
-
-### Coordinator pattern
-
-Create a **coordinator task** assigned to `project-planner` (or use native Agent Team tools when available). The coordinator:
-- Holds the full plan + sprint contracts
-- Delegates domain tasks via `SendMessage`
-- Validates `## Context Handoff` from each specialist against the contract
-- Gates sprints before advancing
-- Reports progress + blockers
-
-If native team tools exist, create the coordinator and dependent specialist tasks there. Otherwise, spawn the coordinator as a foreground subagent and have the main agent enforce phase gates between specialist calls.
-
-### Coordinator prompt template
-
-```
-You are the coordinator for implementing [feature].
-
-Plan: [paste plan content or docs/plans/[slug].md]
-Sprint contract: [paste Sprint N contract]
-Skill loaded: [skill name for this domain]
-
-Responsibilities:
-1. Delegate data/API tasks to debugger agent through the available runtime mechanism
-2. Delegate UI tasks to frontend-specialist only after required upstream gates pass
-3. Validate each agent's Context Handoff against contract Done Definition
-4. Run quality gate after each phase: ${tooling.packageManager} run ${tooling.typeChecker}
-5. If any criterion fails → return detailed feedback to the responsible agent, not the user
-6. Only report to user: SPRINT N COMPLETE (all criteria met) or BLOCKED: [specific failing criterion]
-
-Do not implement yourself. Coordinate, validate, gate.
-```
-
-### Context management
-
-| Model | Strategy |
+| Work type | Default executor |
 |---|---|
-| Sonnet 4.x | Context reset between sprints — write handoff artifact before each reset |
-| Opus 4.6+ | Auto-compaction, continuous session — monitor for context anxiety |
+| Single-file known fix | Direct edit |
+| Astro/page/component/styling | `frontend-specialist` for L3+ |
+| Build/type/runtime bug | `debugger` for L3+ |
+| Performance/SEO/a11y/security | `performance-optimizer` for L3+ |
+| Codebase discovery | `explorer-agent` |
 
-Handoff artifact path: `docs/plans/HANDOFF-[slug]-sprint-N.md` (use the structure from `Skill("evolution-core")` § Session Handoff).
+## 3. Validation
 
-Handoff contains: completed tasks, verified state, next sprint contract, open issues, key decisions, modified files, resume commands.
+Run the narrowest useful check first, then the full gate when code changed:
 
-Context anxiety symptoms (Sonnet): agent rushing, skipping edge cases, accepting failures. If observed → trigger reset immediately.
-
----
-
-## 7. `--codex` flag (L5+ delegation)
-
-For implementation phases too large or complex for a standard agent:
-
-Invoke `codex:rescue` skill with:
-- Task description from the plan phase
-- Sprint contract done criteria
-- Relevant file paths + line references
-- Verify command
-
-Codex handles implementation. Main agent validates against the sprint contract when done.
-
----
-
-## 8. Quality gates
-
-Per `_shared.md` § 1.
-
-| When | Command |
-|---|---|
-| After each task | `${tooling.packageManager} run ${tooling.typeChecker}` |
-| After each phase | type-check + lint |
-| After sprint (if contracts) | All `verify:` commands in Done Definition |
-| Final | type-check + lint + tests |
-
----
-
-## 9. Failure handling
-
-| Attempt | Action |
-|---|---|
-| 1st | Read error. Retry with error context added to agent prompt |
-| 2nd | Invoke `debugger` skill. Break task into smaller subtasks |
-| 3rd | Switch to `/debug recover`. Escalate to user with root-cause analysis |
-
-Never retry blindly. Never skip a gate because a task "looks correct."
-
----
-
-## Stopping conditions
-
-- STOP if no plan exists → invoke `Skill("planning")` first
-- STOP after 3rd failure on same task → invoke `/debug recover`
-- STOP if agent team runs 10+ task iterations without sprint completion
-- ASK if plan has `[ASSUMED]` items not yet validated
-- ASK before destructive operations (schema drops, data deletion)
-
----
-
-## 10. Cleanup (Coordinated Runs)
-
-After all sprints complete, collect final handoffs, close any runtime-native team resources if they were created, and leave no background research task uncollected.
-
----
-
-## 11. Completion
-
-Final gate: `Skill("superpowers:verification-before-completion")` — capture full stdout + exit code of type-check / lint / tests; do not declare "complete" without that evidence.
-
-Append a row to `.claude/logs/progress.md` (date, phase, commit SHA) per AGENTS.md cardinal rule 4.
-
-Then hand off to `/verify` for the full post-implementation pipeline (which itself invokes `finishing-a-development-branch` in Phase 10 to surface the merge/PR/keep/discard options menu).
-
+```bash
+bun run lint
+bunx astro check
+bun run build
 ```
-Implementation complete.
 
-Gates passed (evidence captured):
-  - Type check: ok (exit 0)
-  - Lint: ok (exit 0)
-  - Tests: ok (N passed / 0 failed)
-  - Sprint contracts: ok (if applicable)
-
-Next: /verify   (runs the full 10-phase gate + finishing-a-development-branch menu)
-```
+Report exact commands and results. If a gate fails, fix only failures caused by the current work; flag unrelated failures separately.

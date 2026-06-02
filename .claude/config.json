@@ -1,51 +1,42 @@
 {
+  "$schema": "./config.schema.json",
   "project": {
-    "name": "trintae3",
-    "displayName": "TRINTAE3 — Landing Page",
-    "purpose": "Standalone landing page for the TRINTAE3 post-graduation + mentorship program.",
+    "name": "aula-trintae3",
+    "displayName": "Aula Gratuita TRINTAE3 — Grupo US",
+    "parentBrand": "Grupo US · Dra. Sacha Gualberto",
+    "purpose": "Landing estática de inscrição para uma aula gratuita ao vivo de saúde estética avançada.",
     "stack": "astro-static-tailwindv4",
-    "stackSummary": "Astro 6 (static-only) · Bun · Tailwind CSS v4 · React 19 (islands; minimal) · Railway · Lucide React · Playfair Display + Inter",
-    "domain": "trintae3.gpus.com.br",
     "stagingUrl": "http://localhost:4321",
-    "productionUrl": "https://trintae3.gpus.com.br",
+    "productionUrl": "https://aula33.gpus.com.br",
     "locale": "pt-BR",
-    "brand": "trintae3"
+    "designModelRepo": "../trintae3"
   },
-  "skills": {
-    "brand": "grupo-us",
-    "theme": "gpus-theme",
-    "stack": "astro"
+  "content": {
+    "productSlug": "aula-trintae3",
+    "productJson": "src/content/products/aula-trintae3.json",
+    "ogImage": "/og/trintae3.png",
+    "anchors": ["#aula", "#para-quem", "#autoridade", "#inscricao", "#faq"],
+    "legalRoutes": ["/termos", "/politica-de-privacidade"],
+    "sections": {
+      "hero": "",
+      "audience": "#para-quem",
+      "learn": "#aula",
+      "authority": "#autoridade",
+      "form": "#inscricao",
+      "faq": "#faq"
+    }
   },
-  "cardinals": {
-    "renderMode": "static-only",
-    "spa": "forbidden",
-    "ssrAdapter": "forbidden",
-    "contentSsot": "src/content/",
-    "themeSsot": "src/styles/global.css",
-    "iconLibrary": "lucide-react"
-  },
-  "whatsapp": {
-    "enabled": true,
+  "lead": {
     "sdrName": "Laura",
-    "sdrE164": "+556294705081",
-    "messagePrefix": "Olá, Laura!",
-    "ssotFile": "src/lib/whatsapp.ts"
+    "whatsappGreeting": "Olá, Laura!",
+    "whatsappHelper": "src/lib/whatsapp.ts",
+    "formComponent": "src/components/landing/RegistrationForm.astro",
+    "endpointEnv": "PUBLIC_FORM_ENDPOINT",
+    "leadTable": "aula_trintae3_leads"
   },
-  "commit": {
-    "scopes": [
-      "site",
-      "theme",
-      "content",
-      "seo",
-      "astro",
-      "redirects",
-      "config",
-      "scripts",
-      ".claude",
-      "deps",
-      "a11y",
-      "perf"
-    ]
+  "tracking": {
+    "ga4Env": "PUBLIC_GA4_ID",
+    "pixelEnv": "PUBLIC_FB_PIXEL_ID"
   },
   "paths": {
     "backendRoot": "",
@@ -53,10 +44,7 @@
     "schemaRoot": "",
     "stylesRoot": "src/styles",
     "componentsRoot": "src/components",
-    "libRoot": "src/lib",
-    "contentRoot": "src/content",
-    "pagesRoot": "src/pages",
-    "layoutsRoot": "src/layouts"
+    "libRoot": "src/lib"
   },
   "tooling": {
     "packageManager": "bun",
@@ -64,12 +52,13 @@
     "typeChecker": "astro-check",
     "linter": "biome",
     "testRunner": "",
-    "deployer": "vercel",
+    "deployer": "vercel-static",
     "frontendFramework": "astro+react-islands",
     "database": "",
     "orm": ""
   },
   "gates": {
+    "advisory": true,
     "lighthouse": {
       "performance": 95,
       "accessibility": 95,
@@ -78,11 +67,12 @@
     },
     "lcp": 2500,
     "cls": 0,
-    "inp": 100,
+    "inp": 200,
     "initialJsKb": 50
   },
   "protectedFiles": {
     "exact": [
+      "astro.config.mjs",
       "src/lib/whatsapp.ts",
       "src/content.config.ts",
       "package.json",
@@ -91,9 +81,7 @@
       "lefthook.yml"
     ],
     "segments": [],
-    "contains": [
-      "bun.lockb"
-    ]
+    "contains": ["bun.lock"]
   },
   "rulesDir": ".claude/rules",
   "templatesDir": ".claude/templates",

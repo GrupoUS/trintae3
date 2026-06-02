@@ -1,40 +1,31 @@
-# Claude Code Behavioral Config
+# Claude Code Behavioral Config — GPUS Astro Landing
 
-> Tier 1 — always loaded. Combined with root `AGENTS.md` must stay **< 500 lines total**.
-> Read root `AGENTS.md` first: @../AGENTS.md
-> Subdirectory `AGENTS.md` files are read **only when editing files in that subdirectory**.
-> All project-specific values resolve from `.claude/config.json`.
+> Tier 1 — sempre carregado. Camada **genérica e portável** para landings Astro do **Grupo US · Dra. Sacha Gualberto**.
+> Valores de instância vivem em `.claude/config.json`, lidos via `${...}` (ex.: `${project.displayName}`, `${content.productJson}`, `${lead.whatsappGreeting}`).
+> Leia o root `AGENTS.md` primeiro: @../AGENTS.md
+> Subdirectory `AGENTS.md` só vale ao editar arquivos naquele subtree (ex.: `src/AGENTS.md`).
 
 ---
 
 ## Project identity
 
-**Name:** `config.json::project.displayName` (currently `Grupo US — Site Institucional`).
-**Purpose:** `config.json::project.purpose` (currently `Static marketing site for Grupo US.`).
-**Stack:** `config.json::project.stackSummary` (currently `Astro 6 (static-only) · Bun · Tailwind CSS v4 · React 19 (islands; minimal) · Railway · Lucide React · Playfair Display + Inter`).
-**Locale:** `config.json::project.locale` (currently `pt-BR`).
+**Name:** `${project.displayName}` (config: `project.displayName`)
+**Parent brand:** Grupo US · Dra. Sacha Gualberto
+**Purpose:** `${project.purpose}` — landing estática premium (config: `project.purpose`).
 
-Project metadata in `.claude/config.json`. Architecture map / commands / pre-delivery checklist in root `AGENTS.md`. Brand voice + products: `Skill('${skills.brand}')`. Theme tokens: `Skill('${skills.theme}')`. Stack patterns: `Skill('${skills.stack}')`.
+Stack: Astro 6 static-only · Bun · Tailwind CSS v4 · React 19 (islands mínimas — preferir zero ilha) · Lucide / SVG inline · Playfair Display + Inter · `${project.locale}` · deploy Vercel static em `${project.productionUrl}`.
+
+Project metadata: `.claude/config.json`. Product/copy SSOT: `${content.productJson}`. Schema: `src/content.config.ts`. Brand skills: `gpus-theme` (Navy/Gold) + `grupo-us` (copy/funil drasacha). Sistema de design: root `DESIGN.md`; posicionamento/conversão: root `PRODUCT.md`.
 
 ---
 
 ## Behavior
 
-These are non-default behaviors. Standard coding conventions are not listed because Claude already applies them.
-
-- **Implement directly, don't just suggest.** Code-first responses.
-- **Minimal explanation.** Assume I know the language.
-- **Project package manager only** — `config.json::tooling.packageManager` (currently `bun` → `bun install` / `bun run` / `bunx`). Never use another PM.
-- **Reference applied rules** when relevant (e.g., "per `.claude/rules/frontend.md` redirect tri-sync").
-
----
-
-## Skill invocation
-
-- **Invoke relevant skills BEFORE any response or action.** Even a 1% chance a skill applies → invoke it first.
-- **Process skills first** (planning, debugging), **implementation skills second**.
-- **Use the `Skill` tool** — never `Read` skill files directly with the `Read` tool.
-- **Process skills used by an agent SHOULD be preloaded via the `skills:` frontmatter field** (Anthropic-recommended). Body-level `Skill()` calls remain valid for ad-hoc / conditional invocation. See `.claude/skills/senior-prompt-engineer/SKILL.md § 8` for assignments.
+- **Implementar direto, não só sugerir.**
+- **Explicação mínima e técnica.**
+- **Bun only:** `bun install`, `bun run`, `bunx`. Nunca `npm` / `yarn` / `pnpm`.
+- **Escopo do produto:** não trazer rotas, produtos, copy, CTAs ou exemplos de outros projetos GPUS. Modelo de design opcional = `${project.designModelRepo}` quando definido.
+- **Referenciar regras aplicadas** quando relevante.
 
 ---
 
@@ -42,100 +33,63 @@ These are non-default behaviors. Standard coding conventions are not listed beca
 
 | Type | Indicators | Action |
 |---|---|---|
-| **Trivial** (L1-L2) | Single file, known pattern | Direct fix — no planning |
-| **Explicit** (L3) | Well-scoped, clear requirements | Light planning → execute |
-| **Exploratory** (L4) | Ambiguous scope, multiple valid approaches | Discover → research → plan |
-| **Open-ended** (L5+) | Vague, requires decomposition | Full D.R.P.I.V via `/plan` |
+| Trivial L1–L2 | single file, padrão conhecido | direct fix |
+| Explicit L3 | requisito claro | light plan → execute |
+| Exploratory L4 | escopo ambíguo, múltiplas abordagens | discover → research → plan |
+| Open-ended L5+ | decomposição ampla | `/plan` |
 
-**Autonomy:** proceed without asking when changes are **local + reversible + evidence-supported + within existing architecture**. State assumptions briefly and continue.
-
-**Ask first only for:**
-- Destructive operations (file deletion, branch deletion, hard reset)
-- Shared-system or production-impacting config changes
-- External actions visible to other people (commits, pushes, PRs, messages, deploys)
+Autonomia quando a mudança é local, reversível, baseada em evidência e dentro da arquitetura atual. Perguntar antes de operações destrutivas, dependências novas, schema-shape relevante, **destino de lead/form**, **pixel/tag/IDs de tracking**, deploy/produção ou ação externa visível.
 
 ---
 
-## Cardinal rules (non-negotiable)
+## Cardinal rules
 
-Universal-by-default. Values that vary per project (render mode, SSOT paths, package manager, WhatsApp toggle) resolve from `.claude/config.json::cardinals` + `::whatsapp` + `::tooling`.
-
-1. **Never assume correctness.** Verify against official docs, runtime build, or `<pm> run check:external-urls` before applying changes.
-2. **Always debug after changes.** Every modification ends with the project gate chain: `<pm> run lint && <pm>x astro check && <pm> run build` (substitute `<pm>` from `config.json::tooling.packageManager`).
-3. **NEVER use emojis as UI icons.** Use only the project's declared icon library — `config.json::cardinals.iconLibrary` (currently `lucide-react`).
-4. **NEVER violate the project render mode.** When `config.json::cardinals.renderMode = static-only`: no `ClientRouter`, no `prerender = false`, no SSR adapter (`@astrojs/node` / `@astrojs/vercel` / `@astrojs/cloudflare`). When `renderMode = ssr` or `hybrid`: declare per-page mode explicitly; never silently drift.
-5. **NEVER hardcode product / team / landing copy** in `.astro` or `.tsx`. Always `getCollection()` from `config.json::cardinals.contentSsot` (currently `src/content/`).
-6. **NEVER inline `wa.me/...` URLs** *(applies when `config.json::whatsapp.enabled = true`)*. Always go through `config.json::whatsapp.ssotFile` (currently `src/lib/whatsapp.ts`). When `whatsapp.enabled = false`, this cardinal is dormant.
-7. **NEVER hardcode hex** outside `config.json::cardinals.themeSsot` (currently `src/styles/global.css`) `@theme` block. Semantic tokens or named brand utilities only.
-8. **NEVER animate layout properties** (`width`, `height`, `top`, `left`, `padding`, `margin`). Disclosure / accordion uses CSS grid `grid-template-rows: 0fr ↔ 1fr` or native `<details>`. Other animations: `transform` + `opacity` only.
+1. **Never assume correctness.** Verifique por docs oficiais, runtime/build ou evidência local antes de aplicar.
+2. **Always debug after changes.** Gate padrão: `bun run lint && bunx astro check && bun run build`.
+3. **NEVER use emojis as UI icons.** Lucide ou SVG inline only.
+4. **NEVER use SPA/SSR.** Astro static MPA only — sem `ClientRouter`, sem `prerender = false`, sem SSR adapter.
+5. **NEVER hardcode copy do produto em `.astro` / `.tsx`.** Copy vive em `${content.productJson}`; schema em `src/content.config.ts`. Adicionar campo = schema + JSON + leitor numa mudança.
+6. **NEVER inline `wa.me/...`.** Usar `${lead.whatsappHelper}` (`whatsappUrlWithText`, `whatsappUrlBase`). Toda mensagem começa com `${lead.whatsappGreeting}`.
+7. **NEVER hardcode hex** fora do bloco `@theme` em `src/styles/global.css` (exceção documentada: `<meta theme-color>` literal espelhando `--color-navy`). Usar tokens semânticos.
+8. **Motion livre e expressivo.** Animar qualquer propriedade é permitido (incl. `width`/`height`/`top`/`left`/`padding`/`margin`) e `transition: all` é permitido. Profundidade marcante, sombras dramáticas, glow e glass liberados — sem teto de gold. Preferir `transform`/`opacity` quando o efeito for equivalente (anima sem jank), mas não obrigatório. Único requisito: honrar `prefers-reduced-motion` (a11y). Reveal via `[data-reveal]` + IntersectionObserver (gate `.js`).
+9. **MAIN-ONLY branch workflow.** Sempre editar em `main`. Sem feature branches, sem force-push, sem auto-merge. Deploy/push só quando pedido.
+10. **Lead/PII com cuidado.** Formulário capta nome/e-mail/telefone → exige `<label>` reais, validação, estados de erro/sucesso acessíveis, consent LGPD + link de privacidade, HTTPS. Destino do lead (`${lead.endpointEnv}`) e IDs de tracking (`${tracking.ga4Env}`, `${tracking.pixelEnv}`) vivem em env, nunca commitados; mudá-los = aprovação.
 
 ---
 
 ## Routing matrix
 
-> **Tech-stack skills auto-trigger** via skill description match. `Skill('${skills.stack}')` auto-loads on stack-specific files (e.g., `*.astro`). Stack-specific project values → `.claude/skills/${skills.stack}/references/values/<project>-overlay.md`. Brand canon → `Skill('${skills.brand}')` → `references/values/<project>/`. Theme canon → `Skill('${skills.theme}')` → `references/values/<project>-canon.md`. Generic `.claude/rules/*` carry universal do/don't only.
-
 | Task touches | Load these | Implement in |
 |---|---|---|
-| New page / product landing | `frontend.md` + `DESIGN.md` + `Skill('${skills.stack}')` | `${paths.pagesRoot}/<slug>.astro` + `${paths.contentRoot}/products/<slug>.json` (gpus-site mirror: `mentoria-black-neon.astro`) |
-| New external product redirect | `${skills.stack}/references/project-overlay-template.md § External redirect tri-sync` + values/<project>-overlay.md | `${paths.contentRoot}/products/<slug>.json::externalSiteUrl` + `astro.config.mjs::redirects` + `astro.config.mjs::sitemap.filter()` (3-way sync) |
-| Edit landing copy / CTA / FAQ / testimonial | `${skills.stack}/references/content-collections.md § SSOT pattern` + `Skill('${skills.brand}')` | `${paths.contentRoot}/products/<slug>.json` only — never component file |
-| Update home journey order | `Skill('${skills.brand}')` → `references/values/<project>/manual-resumo.md § Jornada` | `${paths.contentRoot}/products/<slug>.json::order` |
-| WhatsApp message / CTA *(when `whatsapp.enabled`)* | `Skill('${skills.brand}')` → `references/whatsapp-ssot.md` | `cta.whatsappMessage` in product JSON (always prefixed `config.json::whatsapp.messagePrefix`) — `config.json::whatsapp.ssotFile` is SSOT for URL building |
-| WhatsApp number / E.164 *(when `whatsapp.enabled`)* | `Skill('${skills.brand}')` → `references/whatsapp-ssot.md` | `WHATSAPP_SDR_E164` constant in `config.json::whatsapp.ssotFile` — single source |
-| Theme token / new utility | `DESIGN.md` + `Skill('${skills.theme}')` | `config.json::cardinals.themeSsot` `@theme` block + `@layer utilities` |
-| New landing section component | `frontend.md` + `DESIGN.md` + `Skill('${skills.stack}')` | `${paths.componentsRoot}/landing/*.astro` (pure Astro by default; promote to `.tsx` only when interactivity required) |
-| Hero island animation | `${skills.stack}/SKILL.md § Common Mistakes` + `references/values/<project>-overlay.md § Hydration` | `${paths.componentsRoot}/landing/<island>.tsx` with `client:idle` (never `client:load` unless per overlay allowlist) |
-| FAQ behavior | `frontend.md` + `DESIGN.md § Motion` + `${skills.stack}/references/islands-architecture.md § FAQ accordion` | `${paths.componentsRoot}/landing/FAQ.astro` — native `<details>` or CSS grid `0fr/1fr`; never Framer height tween |
-| SEO meta / JSON-LD | `seo.md` + `Skill('${skills.stack}')` (when sitemap plugin / stack-specific) | `${paths.layoutsRoot}/Layout.astro` (Organization + BreadcrumbList) + per-page frontmatter (`title`, `description`, `ogImage`) |
-| A11y plumbing | `frontend.md § Accessibility` + `${skills.stack}/references/project-overlay-template.md § Layout.astro contracts` | `${paths.layoutsRoot}/Layout.astro` (skip link, `<main id="conteudo-principal">`, `<noscript>` reveal) + `config.json::cardinals.themeSsot` |
-| Performance budget | `stability.md § Performance gates` + `${skills.stack}/references/performance.md` | `Layout.astro` (preconnect fonts) + Astro `<Image>` discipline + hydration audits |
-| Smoke tests / anti-patterns / debug | `stability.md` + `${skills.stack}/references/values/<project>-overlay.md § Smoke commands` | filesystem (greps + Lighthouse + `<pm> run check:external-urls`) |
-| Agent prompt or new agent file | `Skill('senior-prompt-engineer')` | `.claude/agents/<name>.md` (frontmatter + body) |
-| Multi-agent command (parallel batch) | `senior-prompt-engineer` + `_shared.md § 7.5` | `.claude/commands/<cmd>.md` |
-| Autoresearch run / record evolve experiment / consult prior keep-decision evidence | `evals/README.md` + `evals/site/<area>/compound.md` | `evals/site/<area>/runs/<YYYY-MM-DD>-<slug>/run.md` (write via `/evolve`) — never hand-edit harness/grade artifacts |
-| Bootstrap new project from this seed | `.claude/scaffolding/BOOTSTRAP.md` | new repo (clone + checklist) |
+| Copy, FAQ, datas, oferta, legal/disclaimer | `grupo-us` + `astro` | `${content.productJson}` |
+| WhatsApp CTA/message | `grupo-us` | `${content.productJson}` message; `${lead.whatsappHelper}` só para número/helper |
+| Seção da landing | `frontend.md` + `DESIGN.md` + `astro` + `gpus-theme` | `src/components/landing/*.astro` |
+| Formulário de inscrição | `frontend.md` + `astro` | `${lead.formComponent}` (+ env endpoint) |
+| Tracking GA4/Pixel/consent | `seo.md` + `performance-optimization` | `src/layouts/Layout.astro` + env |
+| React island / floating UI | `astro` + `frontend.md` | `.tsx`/`.astro` só quando interatividade provada; preferir Astro puro |
+| Content schema | `astro/references/content-collections.md` | `src/content.config.ts` + JSON em uma mudança |
+| SEO meta / JSON-LD / canonical | `seo.md` + `astro` | `src/layouts/Layout.astro`, `src/pages/index.astro`, `astro.config.mjs` |
+| Theme token / utility | `DESIGN.md` + `gpus-theme` | `src/styles/global.css` `@theme` / utilities |
+| FAQ behavior | `frontend.md` + `DESIGN.md § Motion` | `src/components/landing/FAQ.astro`; `<details>` nativo ou disclosure animado (height/grid livre) |
+| Performance / Lighthouse | `stability.md` + `performance-optimization` | hydration audit, image priority, fonts, bundle |
+| Agent prompt / command | `senior-prompt-engineer` | `.claude/agents/*.md`, `.claude/commands/*.md` |
 | Anywhere | `stability.md` | universal checklist |
 
 ---
 
 ## Sequential thinking
 
-Invoke `mcp__sequential-thinking__sequentialthinking` **before** acting (not after) when any of these apply:
-
-| Trigger | Example |
-|---|---|
-| Request is L4+ (multi-domain, cross-layer) | Feature touching schema + UI + SEO |
-| Ambiguous requirements with 2+ valid approaches | "improve performance" with no metric |
-| Error spans 3+ files or services | Cascade failure after deploy |
-| Architecture decision with irreversible consequences | New dependency, render-mode change |
-| Plan has 3+ sequential phases with dependencies | Sprint with content → component → style gates |
-| Confidence < 4 on root cause after initial investigation | Bug with no clear reproduction path |
-
-**Never invoke for:** L1-L2 fixes, known patterns, direct style/lint/type changes.
+Invoke before acting when L4+, multi-domain, 3+ dependent phases, irreversible architecture choice, cascade error, ou confidence < 4 no root cause. Não invocar para edits triviais.
 
 ---
 
-## Research tools
+## Stopping conditions
 
-| Question | Tool |
-|---|---|
-| Library/framework API, config, version, migration | `mcp__claude_ai_Context7__resolve-library-id` → `mcp__claude_ai_Context7__query-docs` |
-| Current best practices, CVEs, ecosystem news, external APIs | `mcp__tavily__search` (add year + version to query) |
-| Both needed | Run both in parallel in the same message |
-
-Codebase search (`Grep` / `Read` / `Glob`) is the **fallback for internal questions, never the first step for external knowledge.** Use even for well-known libraries — training data may be stale.
-
----
-
-## Stopping conditions (hard limits)
-
-- **Max 3 fix attempts** on the same hypothesis → escalate to `evaluator` (Mode 3: Architecture Analysis)
-- **Max 5 agent spawns** per user request → pause and checkpoint with the user
-- **Confidence < 3** on a critical finding → flag as assumption and ask the user
-- **Scope expands** beyond the original request → STOP and confirm
-- **Quality gate fails 2× consecutively** → invoke `/debug recover`
-- **Coordinator max-iteration:** any agent-team coordinator returns `BLOCKED` to main after 2 consecutive `REVISION_REQUIRED` on the same task → main calls `/debug recover` (do not escalate to user mid-loop)
+- Max 3 fix attempts no mesmo hipótese → evaluator Mode 3 / `/debug recover`.
+- Max 5 agent spawns por request → checkpoint com usuário.
+- Confidence < 3 em finding crítico → flag assumption e pergunte.
+- Scope expansion além do request → pare e confirme.
+- Quality gate falha 2× seguidas → `/debug recover`.
 
 ---
 
@@ -143,41 +97,33 @@ Codebase search (`Grep` / `Read` / `Glob`) is the **fallback for internal questi
 
 | Action | Authority |
 |---|---|
-| L1-L2 fixes, style/lint/type fixes | Autonomous |
-| Schema additions, new dependencies, file deletion | **Confirm first** |
-| Production config, destructive operations, deploy to prod | **Always ask** |
+| L1–L2 fixes, style/lint/type fixes | Autonomous |
+| Schema additions, new dependency, file deletion | Confirm first |
+| Destino de lead/form, IDs de pixel/tag, env vars | Confirm first |
+| Production config (`astro.config.mjs`, `vercel.json`), destructive ops, deploy | Always ask unless explicitly requested in current turn |
 
 ---
 
-## Pointers (Tier 3 — read on demand)
+## Pointers
 
-### Universal rules (portable to any project)
+### Project-specific
 
-- `.claude/rules/frontend.md` — component placement, hydration philosophy, content-data SSOT, forms, external surfaces, performance, a11y plumbing.
-- `.claude/rules/DESIGN.md` — color tokens, typography, components, layout, iconography, motion, imagery, depth, focus.
-- `.claude/rules/stability.md` — A–L checklist, render-mode invariants, CWV gates, smoke template, anti-patterns, debug triage.
-- `.claude/rules/seo.md` — locale, routes, sitemap, robots, OG/Twitter, JSON-LD shape, CWV thresholds, AI citation (GEO).
+- `.claude/config.json` — instância (nome, domínio, slug, SDR, rotas, tracking), tooling, gates, protected files.
+- `Skill('grupo-us')` — marca, copy, público, funil drasacha, voz Dra. Sacha.
+- `Skill('gpus-theme')` — Navy/Gold dark-first visual canon.
+- `Skill('astro')` — Astro static-only patterns.
+- root `DESIGN.md` / `PRODUCT.md` — sistema de design + posicionamento GPUS.
+- Modelo de design opcional: `${project.designModelRepo}`.
 
-### Generified Tier-2 rules (values from `config.json`)
+### Universal rules
 
-- `.claude/rules/astro.md` — Astro stack invariants, hydration directive table, Content Collections SSOT, redirect tri-sync, View Transitions opt-in. (Loaded when `config.json::skills.stack = astro`.)
-- `.claude/rules/commit.md` — Conventional Commits + scopes (from `config.json::commit.scopes`), lefthook pre-commit + manual gate checklist, protected files, branch protection pointer.
-- `.claude/rules/mcp.md` — MCP server inventory + terminal discipline (project PM from `config.json::tooling.packageManager`) + PAUSE-THINK-HYPOTHESIZE-EXECUTE debug loop.
-- `.claude/rules/commands.md` — 11 slash commands + skill phase ordering + agent ↔ skill pairings (skill names from `config.json::skills`) + stopping conditions quick-ref.
+- `.claude/rules/frontend.md` — Astro/component/hydration/a11y/frontend guardrails.
+- `.claude/rules/DESIGN.md` — universal design do/don't.
+- `.claude/rules/stability.md` — validation, anti-patterns, smoke thinking.
+- `.claude/rules/seo.md` — locale, sitemap, OG/Twitter, JSON-LD, CWV.
+- `.claude/rules/{astro,commit,mcp,commands}.md` — project execution overlays.
 
-### Tech-stack skills (auto-trigger via skill description match)
+### Docs
 
-- `.claude/skills/${skills.stack}/` (currently `astro`) — framework patterns + per-project overlay in `references/values/<project>-overlay.md`. Template structure: `references/project-overlay-template.md`.
-
-### Brand canon (per Grupo US group)
-
-- `.claude/skills/${skills.theme}/` (currently `gpus-theme`) — design tokens canon. Schema: `references/template.md`. Per-project values: `references/values/<project>-canon.md`.
-- `.claude/skills/${skills.brand}/` (currently `grupo-us`) — products / journey / brand voice. Schema: `references/template.md`. Per-project values: `references/values/<project>/`. WhatsApp mechanic: `references/whatsapp-ssot.md` (values from `config.json::whatsapp`).
-
-### Audit trail / governance
-
-- root `AGENTS.md` — behavioral + orchestrator (commands / agents / skills / MCPs / terminal / authority precedence). Cardinals + routing remain here in `CLAUDE.md`.
-- `.claude/scaffolding/BOOTSTRAP.md` — checklist for starting a new Grupo US project from this seed.
-- `docs/learnings-log.md` — chronological project decisions (append-only, on-demand).
-- `evals/` — autoresearch audit trail. `evals/README.md` for layout.
-- `docs/` — product specs, design canon, implementation plans.
+- `README.md` — setup, structure, commands.
+- `docs/<project>-changelog.md` — histórico da instância.
