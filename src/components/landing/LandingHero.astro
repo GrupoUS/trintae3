@@ -5,10 +5,10 @@ import { LandingHeroEntrance } from "../ui/LandingHeroEntrance";
 
 interface Props {
 	name: string;
-	tagline: string;
 	hero: {
 		headline: string;
 		subheadline: string;
+		highlights?: Array<{ value: string; label: string }>;
 	};
 	type: string;
 	cta: {
@@ -17,97 +17,172 @@ interface Props {
 		whatsappMessage: string;
 		helperText?: string;
 	};
-	badges?: Array<{ label: string; icon?: string }>;
 }
 
-const { name, tagline, hero, type, cta, badges } = Astro.props;
+const { name, hero, type, cta } = Astro.props;
 
 const whatsappUrl = whatsappUrlWithText(cta.whatsappMessage);
 const showWhatsappSecondary = !isWhatsAppDestination(cta.url);
 
-// Split headline to highlight the last word in gold
+// Highlight the last two words of the headline in brand gold.
 const words = hero.headline.split(" ");
-const lastWord = words.pop();
-const headlineStart = words.join(" ");
+const headlineGold = words.slice(-2).join(" ");
+const headlineStart = words.slice(0, -2).join(" ");
+
+const highlights = hero.highlights ?? [];
 ---
 
-<section class="relative min-h-[70vh] overflow-hidden pt-32 pb-20">
+<section class="relative overflow-hidden bg-navy-950 pt-32 pb-20">
 	<!-- Background mesh gradient -->
 	<div class="landing-mesh-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+	<!-- Gold glow anchored behind the portrait -->
+	<div
+		class="pointer-events-none absolute top-1/4 right-0 h-[32rem] w-[32rem] rounded-full opacity-60 blur-3xl"
+		style="background: radial-gradient(circle, color-mix(in srgb, var(--color-gold) 14%, transparent), transparent 70%);"
+		aria-hidden="true"
+	></div>
 
 	<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<LandingHeroEntrance client:visible className="mx-auto max-w-4xl text-center">
-			<!-- Product type badge -->
-			<span
-				class="mb-6 inline-block rounded-full border border-gold/20 bg-gold/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.08em] text-gold"
-			>
-				{type}
-			</span>
-
-			{badges && badges.length > 0 && (
-				<ul class="mb-6 flex flex-wrap items-center justify-center gap-2" aria-label="Selos do programa" role="list">
-					{badges.map((badge) => (
-						<li
-							class="inline-flex items-center rounded-full border border-gold/15 bg-navy-light/40 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-text-primary"
-						>
-							{badge.label}
-						</li>
-					))}
-				</ul>
-			)}
-
-			<p class="mx-auto max-w-3xl text-sm leading-relaxed text-gold/75 md:text-base">
-				{tagline}
-			</p>
-
-			<!-- Headline -->
-			<h1 class="mt-6 font-serif text-4xl font-bold leading-tight text-text-primary md:text-5xl lg:text-6xl">
-				{headlineStart}{" "}
-				<span class="text-gold">{lastWord}</span>
-			</h1>
-
-			<!-- Subheadline -->
-			<p class="mx-auto mt-6 max-w-2xl text-lg text-text-muted md:text-xl">
-				{hero.subheadline}
-			</p>
-
-			<!-- CTAs -->
-			<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-				<Button
-					variant="primary"
-					href={cta.url}
-					size="lg"
-					target="_blank"
-					ariaLabel={`${cta.label} — ${name}`}
-					class="gold-pulse-glow"
+		<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
+			<!-- Text column -->
+			<LandingHeroEntrance client:visible className="text-center lg:col-span-7 lg:text-left">
+				<span
+					class="mb-6 inline-block rounded-full border border-gold-brand/25 bg-gold-brand/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.08em] text-gold-brand"
 				>
-					{cta.label}
-				</Button>
-				{showWhatsappSecondary && (
+					{type}
+				</span>
+
+				<!-- Headline -->
+				<h1 class="font-serif text-4xl font-bold leading-tight text-text-primary md:text-5xl lg:text-6xl">
+					{headlineStart}{" "}
+					<span class="text-gradient-gold">{headlineGold}</span>
+				</h1>
+
+				<!-- Subheadline -->
+				<p class="mx-auto mt-6 max-w-2xl text-lg text-text-muted lg:mx-0 md:text-xl">
+					{hero.subheadline}
+				</p>
+
+				<!-- CTAs -->
+				<div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start">
 					<Button
-						variant="whatsapp"
-						href={whatsappUrl}
+						variant="primary"
+						href={cta.url}
 						size="lg"
 						target="_blank"
-						ariaLabel={`Falar com a Laura no WhatsApp sobre ${name}`}
+						ariaLabel={`${cta.label} — ${name}`}
+						class="gold-pulse-glow"
 					>
-						<svg
-							class="mr-2 h-5 w-5"
-							viewBox="0 0 24 24"
-							fill="currentColor"
-							aria-hidden="true"
-						>
-							<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-						</svg>
-						Falar com a Laura
+						{cta.label}
 					</Button>
+					{showWhatsappSecondary && (
+						<Button
+							variant="whatsapp"
+							href={whatsappUrl}
+							size="lg"
+							target="_blank"
+							ariaLabel={`Falar com a Laura no WhatsApp sobre ${name}`}
+						>
+							<svg
+								class="mr-2 h-5 w-5"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+								aria-hidden="true"
+							>
+								<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+							</svg>
+							Falar com a Laura
+						</Button>
+					)}
+				</div>
+				{cta.helperText && (
+					<p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-subtle lg:mx-0">
+						{cta.helperText}
+					</p>
+				)}
+			</LandingHeroEntrance>
+
+			<!-- Portrait + offer card (static — hero LCP) -->
+			<div class="relative mx-auto w-full max-w-sm lg:col-span-5 lg:max-w-none">
+				<div class="photo-frame mx-auto aspect-[3/4] max-w-sm lg:ml-auto">
+					<img
+						src="/images/photos/IMG_5243.webp"
+						alt="Dra. Sacha Gualberto, mentora e fundadora do TRINTAE3"
+						width="900"
+						height="1350"
+						class="h-full w-full object-cover object-top"
+						loading="eager"
+						decoding="async"
+						fetchpriority="high"
+					/>
+				</div>
+
+				{highlights.length > 0 && (
+					<div
+						class="glass-card-bright float-gentle absolute -bottom-6 left-1/2 w-[88%] max-w-xs -translate-x-1/2 rounded-2xl p-4 lg:left-0 lg:-translate-x-6"
+					>
+						<dl class="grid grid-cols-2 gap-x-4 gap-y-3">
+							{highlights.map((h) => (
+								<div class="text-center lg:text-left">
+									<dt class="font-serif text-2xl font-bold leading-none text-gold" data-countup>
+										{h.value}
+									</dt>
+									<dd class="mt-1 text-[11px] font-medium uppercase tracking-[0.04em] text-text-subtle">
+										{h.label}
+									</dd>
+								</div>
+							))}
+						</dl>
+					</div>
 				)}
 			</div>
-			{cta.helperText && (
-				<p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-text-muted">
-					{cta.helperText}
-				</p>
-			)}
-		</LandingHeroEntrance>
+		</div>
 	</div>
 </section>
+
+<script>
+	function initCountUp() {
+		const prefersReduced = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
+		const els = document.querySelectorAll<HTMLElement>("[data-countup]");
+		if (!els.length || prefersReduced) return;
+
+		const animate = (el: HTMLElement) => {
+			const finalText = el.textContent?.trim() ?? "";
+			const match = finalText.match(/^(\d+)(.*)$/);
+			if (!match) return;
+			const target = Number.parseInt(match[1], 10);
+			const suffix = match[2];
+			const duration = 1100;
+			let start: number | null = null;
+
+			const step = (ts: number) => {
+				if (start === null) start = ts;
+				const progress = Math.min((ts - start) / duration, 1);
+				const eased = 1 - (1 - progress) ** 3;
+				el.textContent = `${Math.round(eased * target)}${suffix}`;
+				if (progress < 1) requestAnimationFrame(step);
+			};
+
+			el.textContent = `0${suffix}`;
+			requestAnimationFrame(step);
+		};
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) {
+						animate(entry.target as HTMLElement);
+						observer.unobserve(entry.target);
+					}
+				}
+			},
+			{ threshold: 0.4 },
+		);
+
+		for (const el of els) observer.observe(el);
+	}
+
+	initCountUp();
+</script>

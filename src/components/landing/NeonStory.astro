@@ -8,7 +8,7 @@ interface Props {
 	image?: string;
 }
 
-const { story, image = "/images/sacha-hero.webp" } = Astro.props;
+const { story, image = "/images/photos/IMG_5875.webp" } = Astro.props;
 ---
 
 <section class="bg-text-primary px-4 py-20 sm:px-6 lg:px-8">
@@ -16,12 +16,12 @@ const { story, image = "/images/sacha-hero.webp" } = Astro.props;
 		<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
 			<!-- Image -->
 			<div class="relative" data-reveal="left">
-				<div class="overflow-hidden rounded-2xl">
+				<div class="photo-frame">
 					<img
 						src={image}
-						alt="Dra. Sacha Gualberto, mentora da Mentoria Black NEON e CEO do Grupo US"
-						width="800"
-						height="1000"
+						alt="Dra. Sacha Gualberto, mentora e fundadora do TRINTAE3"
+						width="1000"
+						height="1250"
 						class="h-auto w-full object-cover"
 						loading="lazy"
 						decoding="async"

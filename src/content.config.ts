@@ -18,7 +18,32 @@ const products = defineCollection({
 		hero: z.object({
 			headline: z.string(),
 			subheadline: z.string(),
+			/** Optional: hero offer-card stats (value + label). */
+			highlights: z
+				.array(z.object({ value: z.string(), label: z.string() }))
+				.min(2)
+				.max(4)
+				.optional(),
 		}),
+		/** Optional: proprietary-method formula band (steps + result). */
+		mechanism: z
+			.object({
+				eyebrow: z.string().optional(),
+				title: z.string().optional(),
+				steps: z.array(z.string()).min(2).max(5),
+				result: z.string(),
+			})
+			.optional(),
+		/** Optional: "traditional course vs TRINTAE3" comparison block. */
+		comparison: z
+			.object({
+				title: z.string().optional(),
+				traditionalLabel: z.string().optional(),
+				trintae3Label: z.string().optional(),
+				traditional: z.array(z.string()).min(2).max(8),
+				trintae3: z.array(z.string()).min(2).max(8),
+			})
+			.optional(),
 		painPoints: z
 			.array(
 				z.object({

@@ -1,13 +1,16 @@
 ---
 import { getCollection } from "astro:content";
 import AudienceFit from "../components/landing/AudienceFit.astro";
+import Comparison from "../components/landing/Comparison.astro";
 import CurriculumModules from "../components/landing/CurriculumModules.astro";
 import Deliverables from "../components/landing/Deliverables.astro";
 import Differentials from "../components/landing/Differentials.astro";
 import FAQ from "../components/landing/FAQ.astro";
 import Guarantee from "../components/landing/Guarantee.astro";
+import HeroTrustBar from "../components/landing/HeroTrustBar.astro";
 import LandingCTA from "../components/landing/LandingCTA.astro";
 import LandingHero from "../components/landing/LandingHero.astro";
+import Mechanism from "../components/landing/Mechanism.astro";
 import MobileCTABar from "../components/landing/MobileCTABar.astro";
 import NeonBio from "../components/landing/NeonBio.astro";
 import NeonBonus from "../components/landing/NeonBonus.astro";
@@ -82,20 +85,24 @@ const totalLabel =
 	<div class="pb-[calc(5rem+env(safe-area-inset-bottom,0px))] md:pb-0">
 		<LandingHero
 			name={d.name}
-			tagline={d.tagline}
 			hero={d.hero}
 			type={d.type}
 			cta={d.cta}
-			badges={d.badges}
 		/>
+
+		{d.badges && <HeroTrustBar badges={d.badges} />}
 
 		<PainPoints audience={d.audience} painPoints={d.painPoints} />
 
 		{d.story && <NeonStory story={d.story} />}
 
+		{d.mechanism && <Mechanism mechanism={d.mechanism} />}
+
 		{d.differentialPillars && (
 			<Differentials differentials={d.differentialPillars} />
 		)}
+
+		{d.comparison && <Comparison comparison={d.comparison} />}
 
 		{d.audienceList && <AudienceFit audienceList={d.audienceList} />}
 
@@ -131,7 +138,7 @@ const totalLabel =
 
 		<FAQ faqs={d.faqs} />
 
-		<LandingCTA name={d.name} cta={d.cta} />
+		<LandingCTA name={d.name} cta={d.cta} image="/images/photos/IMG_5492.webp" />
 	</div>
 	<MobileCTABar cta={d.cta} />
 </Layout>

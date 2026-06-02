@@ -23,13 +23,13 @@ const { bio, faculty } = Astro.props;
 			<!-- Photo column -->
 			<div class="lg:col-span-2" data-reveal="left">
 				<div class="relative mx-auto max-w-sm">
-					<div class="overflow-hidden rounded-2xl">
+					<div class="photo-frame aspect-[4/5]">
 						<img
 							src={bio.photo}
 							alt={`Retrato de ${bio.name}`}
-							width="600"
-							height="750"
-							class="h-auto w-full object-cover"
+							width="1400"
+							height="933"
+							class="h-full w-full object-cover object-top"
 							loading="lazy"
 							decoding="async"
 						/>

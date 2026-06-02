@@ -1,0 +1,54 @@
+---
+interface Props {
+	mechanism: {
+		eyebrow?: string;
+		title?: string;
+		steps: string[];
+		result: string;
+	};
+}
+
+const { mechanism } = Astro.props;
+const { eyebrow, title, steps, result } = mechanism;
+---
+
+<section class="bg-navy-800 px-4 py-20 sm:px-6 lg:px-8" aria-label="O método TRINTAE3">
+	<div class="mx-auto max-w-5xl text-center">
+		{eyebrow && (
+			<span class="text-sm font-medium uppercase tracking-[0.12em] text-gold-brand" data-reveal="up">
+				{eyebrow}
+			</span>
+		)}
+		{title && (
+			<h2 class="mx-auto mt-3 max-w-3xl font-serif text-3xl font-bold leading-tight text-text-primary md:text-4xl" data-reveal="up" data-reveal-delay="1">
+				{title}
+			</h2>
+		)}
+
+		<div class="mt-12 flex flex-col items-stretch justify-center gap-3 lg:flex-row lg:flex-wrap lg:items-center">
+			{steps.map((step, i) => (
+				<Fragment>
+					{i > 0 && (
+						<span class="select-none self-center font-serif text-2xl font-bold text-gold-brand/70" aria-hidden="true">+</span>
+					)}
+					<div
+						class="card-glow-hover rounded-xl border border-gold/15 bg-surface-2/60 px-5 py-4 text-base font-semibold text-text-primary"
+						data-reveal="scale"
+						data-reveal-delay={String(Math.min(i + 1, 6))}
+					>
+						{step}
+					</div>
+				</Fragment>
+			))}
+
+			<span class="select-none self-center font-serif text-2xl font-bold text-gold" aria-hidden="true">=</span>
+
+			<div
+				class="glass-card-bright gold-pulse-glow rounded-xl px-6 py-4 text-base font-bold text-gold"
+				data-reveal="scale"
+			>
+				{result}
+			</div>
+		</div>
+	</div>
+</section>

@@ -9,8 +9,14 @@
 	"image": "/images/products/trintae3.webp",
 	"order": 1,
 	"hero": {
-		"headline": "A única Pós-Graduação em Saúde Estética e HOF do Brasil que também é Mentoria",
-		"subheadline": "Em 6 meses você domina técnica avançada, posicionamento premium e gestão de negócios — com 534h teóricas, 100h de prática supervisionada e mentoria individual com Dra. Sacha."
+		"headline": "A pós que une técnica avançada, prática supervisionada e mentoria para formar autoridades em Saúde Estética",
+		"subheadline": "Para profissionais habilitados que querem dominar procedimento, posicionamento e negócio — com 534h teóricas, 100h de prática supervisionada e mentoria individual com a Dra. Sacha.",
+		"highlights": [
+			{ "value": "634h", "label": "formação total" },
+			{ "value": "100h", "label": "prática supervisionada" },
+			{ "value": "6 meses", "label": "de imersão" },
+			{ "value": "7 dias", "label": "de garantia" }
+		]
 	},
 	"badges": [
 		{ "label": "Pós-Graduação MEC", "icon": "GraduationCap" },
@@ -47,6 +53,36 @@
 			"Você sai sabendo aplicar com excelência técnica, posicionar a sua marca pessoal, precificar com confiança e gerir um negócio que cresce com previsibilidade — com Dra. Sacha e o corpo de mentores ao seu lado em todas as etapas."
 		],
 		"highlight": "Técnica. Posicionamento. Negócios. Tudo o que você precisa para construir a carreira (e a vida) que sempre soube que merecia."
+	},
+	"mechanism": {
+		"eyebrow": "O método TRINTAE3",
+		"title": "Por que o TRINTAE3 forma autoridade — e não só mais um técnico",
+		"steps": [
+			"Técnica avançada",
+			"Prática supervisionada",
+			"Posicionamento premium",
+			"Mentoria de negócios"
+		],
+		"result": "Autoridade em Saúde Estética"
+	},
+	"comparison": {
+		"title": "Curso tradicional vs. TRINTAE3",
+		"traditionalLabel": "Curso tradicional",
+		"trintae3Label": "TRINTAE3",
+		"traditional": [
+			"Muito conteúdo gravado, pouca prática real",
+			"Você assiste — mas aplica sozinho depois",
+			"Foco só na técnica, sem visão de negócio",
+			"Termina e fica sem direção nem comunidade",
+			"Certificação genérica"
+		],
+		"trintae3": [
+			"Pós-graduação MEC + mentoria integradas",
+			"100h de prática supervisionada com preceptor",
+			"Técnica + posicionamento + gestão de negócio",
+			"TD33, masterclasses e comunidade por 6 meses",
+			"Certificação MEC + trilha HOF reconhecida nos Conselhos"
+		]
 	},
 	"differentialPillars": [
 		{
@@ -252,7 +288,7 @@
 	"bio": {
 		"name": "Dra. Sacha Gualberto",
 		"title": "Enfermeira esteta, mentora e CVO do Grupo US",
-		"photo": "/images/sacha-about.webp",
+		"photo": "/images/photos/IMG_6380.webp",
 		"paragraphs": [
 			"Sou enfermeira esteta com mais de 13 anos como empresária da saúde, CVO da minha empresa de Educação Digital, especialista em Saúde Estética Avançada e portadora de certificações internacionais por Harvard e Xiamen.",
 			"Formei centenas de profissionais que hoje são referência no mercado brasileiro — e construí o TRINTAE3 para resolver o problema que vi se repetir em todos eles: técnica de excelência sem visão de negócio é um teto baixo demais para quem sonha grande.",
@@ -295,9 +331,9 @@
 		}
 	],
 	"cta": {
-		"label": "Quero ser TRINTAE3",
-		"url": "https://wa.me/556294705081?text=Ol%C3%A1%2C%20Laura!%20Quero%20saber%20mais%20sobre%20o%20TRINTAE3%20e%20me%20tornar%20Especialista%20em%20Sa%C3%BAde%20Est%C3%A9tica%20Avan%C3%A7ada.",
-		"whatsappMessage": "Olá, Laura! Quero saber mais sobre o TRINTAE3 e me tornar Especialista em Saúde Estética Avançada.",
+		"label": "Quero falar com a Laura",
+		"url": "https://wa.me/556294705081?text=Ol%C3%A1%2C%20Laura!%20Quero%20falar%20sobre%20a%20minha%20vaga%20no%20TRINTAE3%20e%20me%20tornar%20Especialista%20em%20Sa%C3%BAde%20Est%C3%A9tica%20Avan%C3%A7ada.",
+		"whatsappMessage": "Olá, Laura! Quero falar sobre a minha vaga no TRINTAE3 e me tornar Especialista em Saúde Estética Avançada.",
 		"helperText": "Vagas limitadas por turma. Fale com a Laura para receber a tabela atualizada, prazos de inscrição e detalhes das fases presenciais.",
 		"type": "primary"
 	},

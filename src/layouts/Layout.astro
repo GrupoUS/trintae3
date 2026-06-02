@@ -34,7 +34,7 @@ const organizationSchema = {
 	"@type": "EducationalOrganization",
 	name: "TRINTAE3 · Dra. Sacha Gualberto",
 	url: Astro.site?.toString() ?? "https://trintae3.gpus.com.br/",
-	logo: new URL("/images/products/trintae3.svg", Astro.site).toString(),
+	logo: new URL("/images/brand/trintae3-wordmark.png", Astro.site).toString(),
 	description:
 		"Pós-Graduação MEC + Mentoria em Saúde Estética Avançada e HOF para enfermeiros, biomédicos, fisioterapeutas, farmacêuticos e odontólogos.",
 	founder: {
@@ -63,7 +63,10 @@ const organizationSchema = {
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" sizes="32x32" />
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="theme-color" content="#1a1a2e" />
 		<meta name="generator" content={Astro.generator} />
 
 		<!-- SEO -->

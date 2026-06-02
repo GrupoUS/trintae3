@@ -5,18 +5,23 @@
 
 @theme {
 	/* Navy Palette */
-	--color-navy: #1a1a2e;
+	--color-navy-950: #10101f; /* hero base / profundidade máxima */
+	--color-navy: #1a1a2e; /* fundo principal */
+	--color-navy-800: #24243a; /* seção alternada */
 	--color-navy-light: #2a2a40;
+	--color-surface-2: #34344f; /* cards em destaque */
 	--color-navy-lighter: #3d3d5c;
 
 	/* Gold Palette */
-	--color-gold: #d4af37;
+	--color-gold-brand: #c2a36a; /* gold suave da marca — logo, eyebrows, headlines */
+	--color-gold: #d4af37; /* gold de ação — CTAs */
 	--color-gold-light: #e8c96a;
 	--color-gold-dark: #b8960c;
 
 	/* Text */
 	--color-text-primary: #fafaf9;
-	--color-text-muted: #94a3b8;
+	--color-text-muted: #b8c0d0; /* subido de #94a3b8 p/ contraste AA em mobile */
+	--color-text-subtle: #8f9aaf; /* metadados / labels discretos */
 
 	/* Brand: WhatsApp (CTA secundario) */
 	--color-whatsapp: #25d366;
@@ -499,12 +504,35 @@ body {
 @utility text-gradient-gold {
 	background: linear-gradient(
 		135deg,
-		var(--color-gold),
+		var(--color-gold-brand),
 		var(--color-gold-light)
 	);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
+}
+
+/* ===== Photo Frame (tratamento premium de fotos) ===== */
+
+@utility photo-frame {
+	position: relative;
+	border-radius: 1rem;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--color-gold-brand) 30%, transparent);
+	box-shadow: var(--shadow-depth-5);
+}
+
+/* Vinheta sutil sobre a foto p/ integrar ao fundo navy */
+.photo-frame::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background: radial-gradient(
+		120% 100% at 50% 0%,
+		transparent 55%,
+		color-mix(in srgb, var(--color-navy-950) 45%, transparent) 100%
+	);
 }
 
 /* ===== Reduced Motion: Shimmer ===== */

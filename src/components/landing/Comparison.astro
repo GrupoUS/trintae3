@@ -1,0 +1,90 @@
+---
+interface Props {
+	comparison: {
+		title?: string;
+		traditionalLabel?: string;
+		trintae3Label?: string;
+		traditional: string[];
+		trintae3: string[];
+	};
+}
+
+const { comparison } = Astro.props;
+const {
+	title = "Curso tradicional vs. TRINTAE3",
+	traditionalLabel = "Curso tradicional",
+	trintae3Label = "TRINTAE3",
+	traditional,
+	trintae3,
+} = comparison;
+---
+
+<section class="bg-navy px-4 py-20 sm:px-6 lg:px-8" aria-label="Comparativo">
+	<div class="mx-auto max-w-5xl">
+		<div class="text-center" data-reveal="up">
+			<h2 class="font-serif text-3xl font-bold text-text-primary md:text-4xl">
+				{title}
+			</h2>
+			<div class="mx-auto mt-4 h-0.5 w-15 bg-gold" aria-hidden="true"></div>
+		</div>
+
+		<div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+			<!-- Traditional -->
+			<div class="rounded-2xl border border-text-subtle/15 bg-navy-light/40 p-6 md:p-8" data-reveal="left">
+				<h3 class="text-lg font-semibold text-text-muted">{traditionalLabel}</h3>
+				<ul class="mt-6 space-y-4" role="list">
+					{traditional.map((item, i) => (
+						<li
+							class="flex items-start gap-3 text-text-muted"
+							data-reveal="up"
+							data-reveal-delay={String(Math.min(i + 1, 6))}
+						>
+							<svg
+								class="mt-0.5 h-5 w-5 shrink-0 text-text-subtle"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M18 6 6 18" />
+								<path d="m6 6 12 12" />
+							</svg>
+							<span class="leading-relaxed">{item}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+
+			<!-- TRINTAE3 -->
+			<div class="glass-card relative rounded-2xl p-6 md:p-8" data-reveal="right">
+				<h3 class="text-lg font-bold text-gold">{trintae3Label}</h3>
+				<ul class="mt-6 space-y-4" role="list">
+					{trintae3.map((item, i) => (
+						<li
+							class="flex items-start gap-3 text-text-primary"
+							data-reveal="up"
+							data-reveal-delay={String(Math.min(i + 1, 6))}
+						>
+							<svg
+								class="mt-0.5 h-5 w-5 shrink-0 text-gold"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M20 6 9 17l-5-5" />
+							</svg>
+							<span class="leading-relaxed">{item}</span>
+						</li>
+					))}
+				</ul>
+			</div>
+		</div>
+	</div>
+</section>
